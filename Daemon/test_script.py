@@ -2,6 +2,7 @@ import os
 import codecs
 import csv
 import time
+import helper_functions
 #C:\Users\tobao\AppData\Roaming\Dolphin Emulator\Wii\title
 
 save_path = "/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"
@@ -39,17 +40,13 @@ with open("csv/wiitdb_processed2.csv", mode="r") as file:
 
 game_list_processed = []
 
-for hex in dolphin_games:
-   hex_str = hex
-   res = codecs.decode(hex_str, 'hex').decode('utf-8')
-   duplicate = []
-   for data in game_list_raw:
-       if res == data["Game ID"] and res not in duplicate:
-         duplicate.append(res)
-         #print(f"Game ID is {res} and Game Name is {data['Game Name']}")
-         game_list_processed.append({"Game ID": res, "Game Name": data['Game Name']})
+helper_functions.hex_converter(dolphin_games, game_list_raw, game_list_processed)
 
-print(game_list_processed)
+#print(game_list_processed)
+
+game_id_time = []
+
+
 
 for dir in game_type:
    game_paths = f"{save_path}/{dir}"
@@ -57,8 +54,13 @@ for dir in game_type:
    if current_games == ["00000002"]:
       pass
    else:
+      
       for game in current_games:
-         print(f"on current game which is {game}")
+         dolphin_games = []
+         #print(f"on current game which is {game}")
+         dolphin_games.append(game)
+         helper_functions.hex_converter(dolphin_games, game_list_raw, game_id_time)
+         #print(game_id_time)
          game_dir = f"{save_path}/{dir}/{game}"
          time_comparison = [0]
          for path, folders, files in os.walk(game_dir):
@@ -66,14 +68,21 @@ for dir in game_type:
                mod_time = os.path.getmtime(f"{path}/{save_data}")
                for n in time_comparison:
                   if n > mod_time:
-                      print("passing")
+                      #print("passing")
+                      pass
                   else:
-                     time_comparison.append(mod_time)
                      time_comparison.remove(n)
-         print(time_comparison) 
+                     time_comparison.append(mod_time)
+                     
+                     #print(time_comparison)
+         for t in time_comparison:
+            for entry in game_id_time:
+               entry.update({"Last Modified": t})
 
-               #formatted_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(mod_time))
-               #print(formatted_time)
+print(game_id_time)
+         #for time_epoch in time_comparison: 
+            #formatted_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(time_epoch))
+            #print(formatted_time)
                
 
 # age since modified
