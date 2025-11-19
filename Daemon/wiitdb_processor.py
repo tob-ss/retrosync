@@ -16,8 +16,8 @@ wiitdb_csv = []
 
 file = open("wiitdb.txt")
 for line in file:
-    gameID = line[0:6]
-    gameName = line[9:]
+    gameID = line[0:4]
+    gameName = line[7:]
     wiitdb_csv.append({"Game ID": gameID, "Game Name": gameName})
 
 wiitdb_csv_name = "wiitdb_processed.csv"
