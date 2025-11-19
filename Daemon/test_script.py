@@ -1,5 +1,6 @@
 import os
 import codecs
+import csv
 #C:\Users\tobao\AppData\Roaming\Dolphin Emulator\Wii\title
 
 path = "/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"
@@ -26,6 +27,16 @@ for hex in dolphin_games:
    hex_str = hex
    res = codecs.decode(hex_str, 'hex').decode('utf-8')
    print(res)
+
+with open("csv/wiitdb_processed_4cs2.csv", mode="r") as file:
+    csv_reader = csv.DictReader(file)  # Create DictReader
+
+    data_list = []  # List to store dictionaries
+    for row in csv_reader:
+        data_list.append(row)
+
+for data in data_list:
+    print(data)
 
 #in the loop if is a game; convert into hex
 #compare the hex value with game IDs in the processed csv files
