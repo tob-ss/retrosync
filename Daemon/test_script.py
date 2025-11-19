@@ -1,11 +1,12 @@
 import os
 import codecs
 import csv
+import time
 #C:\Users\tobao\AppData\Roaming\Dolphin Emulator\Wii\title
 
-path = "/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"
+save_path = "/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"
 
-game_type = os.listdir(path)
+game_type = os.listdir(save_path)
 
 dolphin_games = []
 
@@ -15,7 +16,7 @@ skip_game_type = ["00000001","00000002", "00010000", "00010001", "00010002", "00
 
 
 for dir in game_type:
-        game_paths = f"{path}/{dir}"
+        game_paths = f"{save_path}/{dir}"
         current_games = os.listdir(game_paths)
         if current_games == ["00000002"]:
            pass
@@ -36,7 +37,7 @@ with open("csv/wiitdb_processed2.csv", mode="r") as file:
     for row in csv_reader:
         game_list_raw.append(row)
 
-print(dolphin_games)
+game_list_processed = []
 
 for hex in dolphin_games:
    hex_str = hex
@@ -45,10 +46,40 @@ for hex in dolphin_games:
    for data in game_list_raw:
        if res == data["Game ID"] and res not in duplicate:
          duplicate.append(res)
-         print(f"Game ID is {res} and Game Name is {data['Game Name']}")
+         #print(f"Game ID is {res} and Game Name is {data['Game Name']}")
+         game_list_processed.append({"Game ID": res, "Game Name": data['Game Name']})
 
-#in the loop if is a game; convert into hex
-#compare the hex value with game IDs in the processed csv files
-#if the value matches, it should take the value from the processed csv files and add it to a dictionary for now
-# make it so that it prints out the game names in the directory + its age since last modified
+print(game_list_processed)
+
+for dir in game_type:
+   game_paths = f"{save_path}/{dir}"
+   current_games = os.listdir(game_paths)
+   if current_games == ["00000002"]:
+      pass
+   else:
+      for game in current_games:
+         print(f"on current game which is {game}")
+         game_dir = f"{save_path}/{dir}/{game}"
+         time_comparison = [0]
+         for path, folders, files in os.walk(game_dir):
+            for save_data in files: 
+               mod_time = os.path.getmtime(f"{path}/{save_data}")
+               for n in time_comparison:
+                  if n > mod_time:
+                      print("passing")
+                  else:
+                     time_comparison.append(mod_time)
+                     time_comparison.remove(n)
+         print(time_comparison) 
+
+               #formatted_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(mod_time))
+               #print(formatted_time)
+               
+
+# age since modified
+# need to figure out a way to get the modification date in same dictionary
+# get the modification dates seperately. create a second dict with game ids and modification dates
+# need to loop recursively through every file in each folder and get modification date
+# the bigger epoch time is the most recent
+# then combine the two dictionaries based on game ID
 # make the script wakes, whenever theres a change in a file in the folder
