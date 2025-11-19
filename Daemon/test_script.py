@@ -1,5 +1,5 @@
 import os
-
+import codecs
 #C:\Users\tobao\AppData\Roaming\Dolphin Emulator\Wii\title
 
 path = "/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"
@@ -14,20 +14,21 @@ skip_game_type = ["00000001","00000002", "00010000", "00010001", "00010002", "00
 
 
 for dir in game_type:
-        game_path = f"{path}/{dir}"
-        current_game = os.listdir(game_path)
-        if current_game == ["00000002"]:
+        game_paths = f"{path}/{dir}"
+        current_games = os.listdir(game_paths)
+        if current_games == ["00000002"]:
            pass
         else:
-            dolphin_games.append(current_game)
+            for game in current_games:
+               dolphin_games.append(game)
 
-print(dolphin_games)
+for hex in dolphin_games:
+   hex_str = hex
+   res = codecs.decode(hex_str, 'hex').decode('utf-8')
+   print(res)
 
-with open('wiitdb.txt', 'r') as file:
-     data = file.read()
-     print(data)
-
-# create second python script; for ech line, extract first 6 characters. then skip the next three (as they are space and =) then add the rest as a value to the key which is the first 6 characters
-# make that a csv
+#in the loop if is a game; convert into hex
+#compare the hex value with game IDs in the processed csv files
+#if the value matches, it should take the value from the processed csv files and add it to a dictionary for now
 # make it so that it prints out the game names in the directory + its age since last modified
 # make the script wakes, whenever theres a change in a file in the folder

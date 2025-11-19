@@ -17,10 +17,10 @@ wiitdb_csv = []
 file = open("wiitdb.txt")
 for line in file:
     gameID = line[0:4]
-    gameName = line[7:]
+    gameName = line[9:]
     wiitdb_csv.append({"Game ID": gameID, "Game Name": gameName})
 
-wiitdb_csv_name = "wiitdb_processed.csv"
+wiitdb_csv_name = "csv/wiitdb_processed.csv"
 
 fieldnames = ["Game ID", "Game Name"]
 
