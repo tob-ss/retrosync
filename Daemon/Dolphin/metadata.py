@@ -16,36 +16,11 @@ def dolphin_metadata():
 
    skip_game_type = ["00000001","00000002", "00010000", "00010001", "00010002", "00010003", "00010004", "00010005", "00010006", "00010007", "00010008"]
 
-   #for directory in game type, listdir again to actually get the games
-
-
-   #for dir in game_type:
-   #     game_paths = f"{save_path}/{dir}"
-   #      current_games = os.listdir(game_paths)
-   #      if current_games == ["00000002"]:
-   #         pass
-   #      else:
-   #            for game in current_games:
-   #               dolphin_games.append(game)
-
-   #with open("csv/wiitdb_processed1.csv", mode="r") as file:
-   #   csv_reader = csv.DictReader(file)  # Create DictReader
-
-   #   game_list_raw = []  # List to store dictionaries
-   #   for row in csv_reader:
-   #      game_list_raw.append(row)
-
-   #with open("csv/wiitdb_processed2.csv", mode="r") as file:
-   #   csv_reader = csv.DictReader(file)  # Create DictReader
-
-   #   for row in csv_reader:
-   #      game_list_raw.append(row)
-
    game_list_raw = []
 
-   wiitb_processor = classes.wiitdb_processor(game_list_raw)
+   wiitdb_processor = classes.wiitdb_processor(game_list_raw)
 
-   wiitb_processor.process_wiitdb()
+   wiitdb_processor.process_wiitdb()
 
    game_list_processed = []
 
@@ -55,8 +30,12 @@ def dolphin_metadata():
 
    game_id_time = []
 
+   get_game_id_time = classes.metadata_grabber(game_id_time)
+
+   get_game_id_time.get_gameID_Name_Time()
 
 
+'''
    for dir in game_type:
       game_paths = f"{save_path}/{dir}"
       current_games = os.listdir(game_paths)
@@ -89,6 +68,9 @@ def dolphin_metadata():
                   entry.update({"Last Modified": t})
 
    print(game_id_time)
+
+   '''
+
             #for time_epoch in time_comparison: 
                #formatted_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(time_epoch))
                #print(formatted_time)
