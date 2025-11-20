@@ -75,6 +75,45 @@ class metadata_grabber:
 
         print(self.game_id_time)
 
+
+class always_on_functions:
+    def __init__(self, file_number_list=[], modified_date_list=[], save_path="/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"):
+        self.save_path = save_path
+        self.file_number_list = file_number_list
+        self.modified_date_list = modified_date_list
+    
+    def get_total_files(self):
+        skip_game_type = ["00000001","00000002", "00010000", "00010001", "00010002", "00010003", "00010004", "00010005", "00010006", "00010007", "00010008"]
+        game_type = os.listdir(self.save_path)
+        for dir in game_type:
+            game_paths = f"{self.save_path}/{dir}"
+            current_games = os.listdir(game_paths)
+            if current_games == ["00000002"]:
+                pass
+            else:
+                for game in current_games:
+                    game_dir = f"{self.save_path}/{dir}/{game}"
+                    for path, folders, files in os.walk(game_dir):
+                        for save_data in files:
+                            
+                            self.file_number_list.append(save_data)
+
+    def get_modified_dates(self):
+        skip_game_type = ["00000001","00000002", "00010000", "00010001", "00010002", "00010003", "00010004", "00010005", "00010006", "00010007", "00010008"]
+        game_type = os.listdir(self.save_path)
+        for dir in game_type:
+            game_paths = f"{self.save_path}/{dir}"
+            current_games = os.listdir(game_paths)
+            if current_games == ["00000002"]:
+                pass
+            else:
+                for game in current_games:
+                    game_dir = f"{self.save_path}/{dir}/{game}"
+                    for path, folders, files in os.walk(game_dir):
+                        for save_data in files:
+                            mod_time = os.path.getmtime(f"{path}/{save_data}")
+                            self.modified_date_list.append(mod_time)     
+
 class wiitdb_processor:
     def __init__(self, game_list_raw):
         self.game_list_raw = game_list_raw
