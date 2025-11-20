@@ -18,6 +18,22 @@ class save_locations:
                 for game in current_games:
                     self.dolphin_games.append(game)
 
-        
+class wiitdb_processor:
+    def __init__(self, game_list_raw):
+        self.game_list_raw = game_list_raw
 
+    def process_wiitdb(self):
+        import csv
+        with open("csv/wiitdb_processed1.csv", mode="r") as file:
+            csv_reader = csv.DictReader(file)  # Create DictReader
+
+            for row in csv_reader:
+                self.game_list_raw.append(row)
+
+        with open("csv/wiitdb_processed2.csv", mode="r") as file:
+            csv_reader = csv.DictReader(file)  # Create DictReader
+
+            for row in csv_reader:
+                self.game_list_raw.append(row)
+        
 # unfinished, will need to 

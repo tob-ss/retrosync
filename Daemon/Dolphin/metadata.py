@@ -19,27 +19,33 @@ def dolphin_metadata():
    #for directory in game type, listdir again to actually get the games
 
 
-   for dir in game_type:
-         game_paths = f"{save_path}/{dir}"
-         current_games = os.listdir(game_paths)
-         if current_games == ["00000002"]:
-            pass
-         else:
-               for game in current_games:
-                  dolphin_games.append(game)
+   #for dir in game_type:
+   #     game_paths = f"{save_path}/{dir}"
+   #      current_games = os.listdir(game_paths)
+   #      if current_games == ["00000002"]:
+   #         pass
+   #      else:
+   #            for game in current_games:
+   #               dolphin_games.append(game)
 
-   with open("csv/wiitdb_processed1.csv", mode="r") as file:
-      csv_reader = csv.DictReader(file)  # Create DictReader
+   #with open("csv/wiitdb_processed1.csv", mode="r") as file:
+   #   csv_reader = csv.DictReader(file)  # Create DictReader
 
-      game_list_raw = []  # List to store dictionaries
-      for row in csv_reader:
-         game_list_raw.append(row)
+   #   game_list_raw = []  # List to store dictionaries
+   #   for row in csv_reader:
+   #      game_list_raw.append(row)
 
-   with open("csv/wiitdb_processed2.csv", mode="r") as file:
-      csv_reader = csv.DictReader(file)  # Create DictReader
+   #with open("csv/wiitdb_processed2.csv", mode="r") as file:
+   #   csv_reader = csv.DictReader(file)  # Create DictReader
 
-      for row in csv_reader:
-         game_list_raw.append(row)
+   #   for row in csv_reader:
+   #      game_list_raw.append(row)
+
+   game_list_raw = []
+
+   wiitb_processor = classes.wiitdb_processor(game_list_raw)
+
+   wiitb_processor.process_wiitdb()
 
    game_list_processed = []
 
