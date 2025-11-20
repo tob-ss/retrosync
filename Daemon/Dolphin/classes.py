@@ -36,11 +36,14 @@ class metadata_grabber:
                 pass
             else:
                 for game in current_games:
+                    #print(f"looking at {game}")
                     dolphin_games = []
                     dolphin_games.append(game)
                     helper_functions.hex_converter(dolphin_games, game_list_raw, self.game_id_time)
+                    converted_ID = helper_functions.simple_hex_convert(game)
+                    #print(f"obtained game id: {converted_ID}")
                     #for data in self.game_id_time:
-                    #    print(f"on current game which is {data['Game Name']}")
+                        #print(f"on current game which is {data['Game Name']}")
                     #print(game_id_time)
                     game_dir = f"{self.save_path}/{dir}/{game}"
                     #print(game_dir)
@@ -52,19 +55,23 @@ class metadata_grabber:
                             #print(f"looking at this file {save_data} in the following path: {path} and it has the following modification time: {mod_time}") 
                             for n in time_comparison:
                                 if n > mod_time:
-                                    #print("passing")
+                                    #print(f"{n} is bigger than {mod_time}, keeping {n}")
                                     pass
                                 else:
-                                    print(f"removing {n}")
+                                    #print(f"{n} is smaller than {mod_time}, removing {n}")
                                     time_comparison.remove(n)
-                                    print(f"adding {mod_time}")
                                     time_comparison.append(mod_time)
                                     
                                     #print(time_comparison)
                     for t in time_comparison:
                         for entry in self.game_id_time:
-                            entry.update({"Last Modified": t})
-                            print(f"added {t} to {entry}")
+                            #print(f"This is the game ID we're comparing {converted_ID}")
+                            if entry["Game ID"] == converted_ID:
+                                entry.update({"Last Modified": t})
+                                #print(f"added {t} to {entry}")
+                            else:
+                                pass
+
 
         print(self.game_id_time)
 
