@@ -4,7 +4,7 @@ def dolphin_metadata():
    import codecs
    import csv
    import time
-   import Dolphin.helper_functions as helper_functions
+   import helper_functions as helper_functions
    import classes
    #C:\Users\tobao\AppData\Roaming\Dolphin Emulator\Wii\title
 
@@ -90,3 +90,5 @@ def dolphin_metadata():
 
 
    # make the script wakes, whenever theres a change in a file in the folder
+
+dolphin_metadata()
