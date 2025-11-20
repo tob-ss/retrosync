@@ -24,6 +24,8 @@ old_list_modified_date = []
 
 while True:
 
+    trigger_metadata = 0
+
     new_list_file_number_check = []
 
     get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
@@ -32,7 +34,7 @@ while True:
 
     if len(new_list_file_number_check) != len(old_list_file_number_check):
         #print("triggering metadata.py")
-        metadata.dolphin_metadata()
+        trigger_metadata = 1
     else:
         #print("they are the same, moving on")
         pass
@@ -49,12 +51,17 @@ while True:
 
     if sum(new_list_modified_date) != sum(old_list_modified_date):
         #print("triggering metadata.py")
-        metadata.dolphin_metadata()
+        trigger_metadata = 1
     else:
         #print("they are the same, moving on")
         pass
 
     old_list_modified_date = new_list_modified_date
+
+    if trigger_metadata == 1:
+        metadata.dolphin_metadata()
+    else:
+        pass
 
 
 # classes modified date function
