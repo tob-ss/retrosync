@@ -26,20 +26,20 @@ while True:
 
     trigger_metadata = 0
 
-    new_list_file_number_check = []
+    #new_list_file_number_check = []
 
-    get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
+    #get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
 
-    get_total_files.get_total_files()
+    #get_total_files.get_total_files()
 
-    if len(new_list_file_number_check) != len(old_list_file_number_check):
+    #if len(new_list_file_number_check) != len(old_list_file_number_check):
         #print("triggering metadata.py")
-        trigger_metadata = 1
-    else:
+        #trigger_metadata = 1
+    #else:
         #print("they are the same, moving on")
-        pass
+        #pass
 
-    old_list_file_number_check = new_list_file_number_check
+    #old_list_file_number_check = new_list_file_number_check
 
     new_list_modified_date = []
 
