@@ -17,12 +17,16 @@ def connect():
         database=MYSQL_DB
     )
 
-def create_metadata(device, game):
+def create_metadata(game):
     conn = connect()
     cursor = conn.cursor()
-    query = "INSERT INTO retrosync_np_metadata (device, game) VALUES (%s, %s)"
-    values = (device, game)
-    cursor.execute(query, values)
+
+    data_dict = (game)
+    placeholders = ', '.join(['%s'] * len(data_dict))
+    columns = ', '.join(data_dict.keys())
+    query = "INSERT INTO test_customer (%s) VALUES (%s)" % (columns, placeholders)
+    
+    cursor.execute(query, list(data_dict.values()))
     conn.commit()
     conn.close()
     return cursor.lastrowid
