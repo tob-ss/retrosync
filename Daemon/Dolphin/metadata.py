@@ -32,7 +32,7 @@ def dolphin_metadata():
 
    get_game_id_time = classes.metadata_grabber(game_id_time)
 
-   get_game_id_time.get_gameID_Name_Time()
+   return get_game_id_time.get_gameID_Name_Time()
 
             #for time_epoch in time_comparison: 
                #formatted_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(time_epoch))

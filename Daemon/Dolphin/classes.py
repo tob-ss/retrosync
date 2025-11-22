@@ -66,14 +66,14 @@ class metadata_grabber:
                     for t in time_comparison:
                         for entry in self.game_id_time:
                             #print(f"This is the game ID we're comparing {converted_ID}")
-                            if entry["Game ID"] == converted_ID:
-                                entry.update({"Last Modified": t})
+                            if entry["GameID"] == converted_ID:
+                                entry.update({"LastModified": t})
                                 #print(f"added {t} to {entry}")
                             else:
                                 pass
 
 
-        print(self.game_id_time)
+        return self.game_id_time
 
 
 class always_on_functions:

@@ -2,6 +2,7 @@ import os
 import time
 import classes as classes
 import metadata
+import requests
 
 #def detect_file_changes(file_path, interval=1):
 #    last_modified = os.path.getmtime(file_path)
@@ -21,6 +22,8 @@ x = 0
 old_list_file_number_check = []
 
 old_list_modified_date = []
+
+url = "http://16.171.143.16/metadata/"
 
 while True:
 
@@ -59,9 +62,16 @@ while True:
     old_list_modified_date = new_list_modified_date
 
     if trigger_metadata == 1:
-        metadata.dolphin_metadata()
+        metadata = metadata.dolphin_metadata()
+        for n in metadata:
+            n.update({"DeviceID": "Test Device"})
+            post_request = requests.post(url, json = n)
+            print(post_request.text)
     else:
         pass
+
+    
+
 
 
 # classes modified date function
