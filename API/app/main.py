@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException
-from backend import connect, create_metadata
+from backend import connect, create_metadata, flush_duplicates
 
 app = FastAPI()
 conn = connect()
@@ -9,6 +9,7 @@ cursor = conn.cursor()
 @app.post("/metadata/")
 async def add_metadata(game: dict):
     post_id = create_metadata(game)
+    flush_duplicates()
     if post_id:
         return {"Successfully Uploaded Metadata": game}
     else:

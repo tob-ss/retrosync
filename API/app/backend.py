@@ -33,3 +33,10 @@ def create_metadata(game):
     conn.close()
     return cursor.lastrowid
 
+def flush_duplicates():
+    conn = connect()
+    cursor = conn.cursor()
+    query = "CREATE TABLE mytable_temp AS SELECT DISTINCT * FROM test_customer; DROP TABLE test_customer; RENAME TABLE mytable_temp TO test_customer"
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
