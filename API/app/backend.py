@@ -35,7 +35,7 @@ def create_metadata(game):
         WHERE {where_conditions}
     )
     """
-    cursor.execute(query, list(data_dict.values()) + list(data_dict.values()))
+    cursor.execute(query, data_dict.values() + data_dict.values())
     conn.commit()
     conn.close()
     return cursor.lastrowid
