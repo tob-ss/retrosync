@@ -12,4 +12,5 @@ async def add_metadata(game: dict):
     if post_id:
         return {"Successfully Uploaded Metadata": game}
     else:
+        print(post_id)
         raise HTTPException(status_code=400, detail="Metadata not added")
