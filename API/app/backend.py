@@ -36,20 +36,11 @@ def create_metadata(game):
 def flush_duplicates():
     conn = connect()
     cursor = conn.cursor()
-    query = "CREATE TABLE mytable_temp AS SELECT DISTINCT * FROM test_customer"  
-    cursor.execute(query)
-    print("created table")
-    conn.commit()
-    conn.close()
-    conn = connect()
-    query = "DROP TABLE test_customer"
-    cursor.execute(query)
-    print("dropped original table")
-    conn.commit()
-    conn.close()
-    conn = connect()
-    query = "RENAME TABLE mytable_temp TO test_customer"
-    cursor.execute(query)
-    print("renamed temp table")
+    query = "CREATE TABLE mytable_temp AS SELECT DISTINCT * FROM test_customer; DROP TABLE test_customer; RENAME TABLE mytable_temp TO test_customer"
+    query = filter(None, query.split(';'))
+    for i in query:
+        cursor.execute(i.strip() + ';')
+  
+    #cursor.execute(query)
     conn.commit()
     conn.close()
