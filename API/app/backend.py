@@ -31,4 +31,4 @@ def create_metadata(game):
     cursor.execute(query, list(data_dict.values()))
     conn.commit()
     conn.close()
-    return cursor.rowcount
+    return cursor.lastrowid
