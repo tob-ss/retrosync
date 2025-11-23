@@ -26,18 +26,9 @@ def create_metadata(game):
     data_dict = (game)
     placeholders = ', '.join(['%s'] * len(data_dict))
     columns = ', '.join(data_dict.keys())
-    where_conditions = " AND ".join([f"{col} = %s" for col in columns])
-    query = f"""
-    INSERT INTO test_customer ({columns})
-    SELECT {placeholders}
-    WHERE NOT EXISTS (
-        SELECT 1 FROM test_customer
-        WHERE {where_conditions}
-    )
-    """
-    values = list(data_dict.values())
+    query = "INSERT IGNORE INTO test_customer (%s) VALUES (%s)" % (columns, placeholders)
 
-    cursor.execute(query, values + values)
+    cursor.execute(query, list(data_dict.values()))
     conn.commit()
     conn.close()
     return cursor.lastrowid
