@@ -23,7 +23,7 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-url = "http://16.171.143.16/metadata/"
+url = "http://13.48.59.55/metadata/"
 
 while True:
 

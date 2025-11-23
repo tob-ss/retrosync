@@ -8,8 +8,8 @@ cursor = conn.cursor()
 
 @app.post("/metadata/")
 async def add_metadata(game: dict):
-    post_id = create_metadata(game)
-    if post_id:
-        return {"id": post_id, "save metadata": game}
+    rowcount = create_metadata(game)
+    if rowcount > 0:
+        return {"Successfully Uploaded Metadata": game}
     else:
         raise HTTPException(status_code=400, detail="Metadata not added")
