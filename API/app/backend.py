@@ -40,10 +40,12 @@ def flush_duplicates():
     cursor.execute(query)
     conn.commit()
     conn.close()
+    conn = connect()
     query = "DROP TABLE test_customer"
     cursor.execute(query)
     conn.commit()
     conn.close()
+    conn = connect()
     query = "RENAME TABLE mytable_temp TO test_customer"
     cursor.execute(query)
     conn.commit()
