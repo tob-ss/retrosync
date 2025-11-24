@@ -12,7 +12,7 @@ LocalMetadataModel = create_dynamic_localmetadata("test")
 Base.metadata.create_all(bind=engine)
 
 @app.post("/metadata/", response_model=schemas.LocalMetadata)
-def create_localmetadata(GameID: str, localmetadata: schemas.LocalMetadataCreate, db: Session = Depends(get_db)):
+def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session = Depends(get_db)):
     return crud.create_localmetadata(db, localmetadata)
 
 """
