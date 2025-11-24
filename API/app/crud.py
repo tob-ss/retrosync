@@ -4,6 +4,7 @@ from models import create_dynamic_localmetadata
 
 def create_localmetadata(db: Session, localmetadata: schemas.LocalMetadataCreate):
     from main import LocalMetadataModel
+    print(LocalMetadataModel.LastModified)
     check_row = db.query(LocalMetadataModel).filter(LocalMetadataModel.GameID == localmetadata.GameID).first()
     if check_row:
         db.delete(check_row)
