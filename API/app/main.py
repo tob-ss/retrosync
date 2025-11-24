@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 
 app = FastAPI()
 
+LocalMetadataModel = create_dynamic_localmetadata("test")
+
 Base.metadata.create_all(bind=engine)
 
 @app.post("/metadata/", response_model=schemas.LocalMetadata)
