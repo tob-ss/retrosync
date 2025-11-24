@@ -31,7 +31,7 @@ def create_metadata(game):
     cursor.execute(query, list(data_dict.values()))
     conn.commit()
     conn.close()
-    return cursor.lastrowid
+    return cursor.fetchall()
 
 def flush_duplicates():
     conn = connect()
