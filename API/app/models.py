@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, create_engine, ARRAY, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
-from .database import Base
+from database import Base
 
 def create_dynamic_localmetadata(customer_prefix):
     class LocalMetadataModel(Base):

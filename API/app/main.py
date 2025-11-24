@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, Depends
-from .database import engine, Base, get_db
+from database import engine, Base, get_db
 from models import create_dynamic_localmetadata
 from . import models, schemas, crud
 from sqlalchemy.orm import Session
