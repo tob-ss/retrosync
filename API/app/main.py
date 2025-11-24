@@ -16,6 +16,10 @@ def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session
     #print(f"Got: {localmetadata.LastModified}")
     return crud.create_localmetadata(db, localmetadata)
 
+@app.post("/upload/", response_model=schemas.UploadRequest)
+def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session = Depends(get_db)):
+    return crud.create_uploadrequest(db, uploadrequest)
+
 """
 
 conn = connect()
