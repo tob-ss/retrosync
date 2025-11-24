@@ -13,6 +13,7 @@ Base.metadata.create_all(bind=engine)
 
 @app.post("/metadata/", response_model=schemas.LocalMetadata)
 def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session = Depends(get_db)):
+    print(f"Got: {localmetadata.LastModified}")
     return crud.create_localmetadata(db, localmetadata)
 
 """
