@@ -62,8 +62,8 @@ while True:
     old_list_modified_date = new_list_modified_date
 
     if trigger_metadata == 1:
-        metadata = metadata.dolphin_metadata()
-        for n in metadata:
+        metadata.dolphin_metadata()
+        for n in metadata.dolphin_metadata():
             n.update({"DeviceID": "Test Device"})
             post_request = requests.post(url, json = n)
             print(post_request.text)

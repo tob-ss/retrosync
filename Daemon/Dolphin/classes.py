@@ -68,6 +68,7 @@ class metadata_grabber:
                             #print(f"This is the game ID we're comparing {converted_ID}")
                             if entry["GameID"] == converted_ID:
                                 entry.update({"LastModified": t})
+
                                 #print(f"added {t} to {entry}")
                             else:
                                 pass
