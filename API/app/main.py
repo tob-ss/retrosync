@@ -1,8 +1,22 @@
 from typing import Union
-from fastapi import FastAPI, HTTPException
-from backend import connect, create_metadata, flush_duplicates
+from fastapi import FastAPI, HTTPException, Depends
+from .database import engine, Base, get_db
+from models import create_dynamic_localmetadata
+from . import models, schemas, crud
+from sqlalchemy.orm import Session
 
 app = FastAPI()
+
+LocalMetadataTable = create_dynamic_localmetadata("test")
+
+Base.metadata.create_all(bind=engine)
+
+@app.post("/metadata/", response_model=schemas.LocalMetadata)
+def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session = Depends(get_db)):
+    return crud.create_localmetadata(db, localmetadata)
+
+"""
+
 conn = connect()
 cursor = conn.cursor()
 
@@ -15,3 +29,5 @@ async def add_metadata(game: dict):
     else:
         print(post_id)
         raise HTTPException(status_code=400, detail="Metadata not added")
+
+"""
