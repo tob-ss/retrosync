@@ -7,6 +7,6 @@ def create_dynamic_localmetadata(customer_prefix):
         __tablename__ = f"{customer_prefix}_localmetadata"
         GameID = Column(String(50), primary_key=True, nullable=False)
         GameName = Column(String(255), nullable=False)
-        LastModified = Column(String(255), nullable=False)
+        LastModified = Column(Numeric(20,6), nullable=False)
         DeviceID = Column(String(255), nullable=False)
     return LocalMetadataModel

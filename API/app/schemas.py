@@ -4,7 +4,7 @@ from decimal import Decimal
 class LocalMetadataBase(BaseModel):
     GameID: str
     GameName: str
-    LastModified: str
+    LastModified: Decimal
     DeviceID: str
 
 class LocalMetadataCreate(LocalMetadataBase):
