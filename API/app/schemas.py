@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 class LocalMetadataBase(BaseModel):
-    gameID: str
-    gameName: str
+    GameID: str
+    GameName: str
     LastModified: float
     DeviceID: str
 
@@ -10,7 +10,7 @@ class LocalMetadataCreate(LocalMetadataBase):
     pass
 
 class LocalMetadata(LocalMetadataBase):
-    gameID: str
+    GameID: str
 
     class Config:
         orm_mode = True
