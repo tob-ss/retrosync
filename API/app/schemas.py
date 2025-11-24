@@ -1,9 +1,10 @@
 from pydantic import BaseModel
+from decimal import Decimal
 
 class LocalMetadataBase(BaseModel):
     GameID: str
     GameName: str
-    LastModified: float
+    LastModified: Decimal
     DeviceID: str
 
 class LocalMetadataCreate(LocalMetadataBase):
