@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+import models, schemas
 from models import create_dynamic_localmetadata
 
 def create_localmetadata(db: Session, localmetadata: schemas.LocalMetadataCreate):
