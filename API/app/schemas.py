@@ -15,3 +15,19 @@ class LocalMetadata(LocalMetadataBase):
 
     class Config:
         orm_mode = True
+
+class UploadRequestBase(BaseModel):
+    DeviceID: str
+    Operation: str
+    GameID: str
+    Completed: bool
+    TimeStamp: Decimal
+
+class UploadRequestCreate(UploadRequestBase):
+    pass 
+
+class UploadRequest(UploadRequestBase):
+    RequestID: int
+
+    class Config: 
+        orm_mode = True

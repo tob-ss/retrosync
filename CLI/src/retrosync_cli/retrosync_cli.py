@@ -19,12 +19,12 @@ def upload(device, game, all):
     if all == False:
         if click.confirm(f"Please confirm that you would like to upload {game} game save from the following device: {device}"):
             click.echo("Upload Started!")
-            n = {"DeviceID": device, "Operation": "Upload", "GameID": game, "Completed": "False", "TimeStamp": int(time.time())}
+            n = {"DeviceID": device, "Operation": "Upload", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
             print(n)
             post_request = requests.post(url, json = n)
     else:
         if click.confirm(f"Please confirm that you would like to upload all game saves from the following device: {device}"):
             click.echo("Upload Started!")
-            n = {"DeviceID": device, "Operation": "Upload", "GameID": "ALL", "Completed": "False", "TimeStamp": int(time.time())}
+            n = {"DeviceID": device, "Operation": "Upload", "GameID": "ALL", "Completed": False, "TimeStamp": int(time.time())}
             print(n)
             post_request = requests.post(url, json = n)

@@ -12,3 +12,11 @@ def create_localmetadata(db: Session, localmetadata: schemas.LocalMetadataCreate
     db.commit()
     db.refresh(db_localmetadata)
     return db_localmetadata
+
+def create_uploadrequest(db: Session, uploadrequest: schemas.UploadRequestCreate):
+    from main import UploadRequestModel
+    db_uploadrequest = UploadRequestModel(DeviceID=uploadrequest.DeviceID, Operation=uploadrequest.Operation, GameID=uploadrequest.GameID, Completed=uploadrequest.Completed, TimeStamp=uploadrequest.TimeStamp)
+    db.add(db_uploadrequest)
+    db.commit()
+    db.refresh(db_uploadrequest)
+    return db_uploadrequest
