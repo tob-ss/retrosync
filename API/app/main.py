@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, Depends
 from database import engine, Base, get_db
-from models import create_dynamic_localmetadata, create_dynamic_uploadrequest
+from models import create_dynamic_localmetadata, create_dynamic_uploadrequest, create_dynamic_downloadrequest
 import models, schemas, crud
 from sqlalchemy.orm import Session
 
@@ -9,6 +9,7 @@ app = FastAPI()
 
 LocalMetadataModel = create_dynamic_localmetadata("test")
 UploadRequestModel = create_dynamic_uploadrequest("test")
+DownloadRequestModel = create_dynamic_downloadrequest("test")
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,10 @@ def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session
 @app.post("/upload/", response_model=schemas.UploadRequest)
 def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session = Depends(get_db)):
     return crud.create_uploadrequest(db, uploadrequest)
+
+@app.post("/download/", response_model=schemas.DownloadRequest)
+def create_downloadrequest(downloadrequest: schemas.DownloadRequestCreate, db: Session = Depends(get_db)):
+    return crud.create_downloadrequest(db, downloadrequest)
 
 """
 

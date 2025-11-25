@@ -31,3 +31,19 @@ class UploadRequest(UploadRequestBase):
 
     class Config: 
         orm_mode = True
+
+class DownloadRequestBase(BaseModel):
+    DeviceID: str
+    Operation: str
+    GameID: str
+    Completed: bool
+    TimeStamp: Decimal
+
+class DownloadRequestCreate(DownloadRequestBase):
+    pass 
+
+class DownloadRequest(DownloadRequestBase):
+    RequestID: int
+
+    class Config: 
+        orm_mode = True

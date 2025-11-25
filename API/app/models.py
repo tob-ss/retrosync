@@ -21,3 +21,14 @@ def create_dynamic_uploadrequest(customer_prefix):
         Completed = Column(Boolean, nullable=False)
         TimeStamp = Column(Numeric(20,6), nullable=False)
     return UploadRequestModel
+
+def create_dynamic_downloadrequest(customer_prefix):
+    class DownloadRequestModel(Base):
+        __tablename__ = f"{customer_prefix}_downloadrequests"
+        RequestID = Column(Integer, primary_key=True, index=True)
+        DeviceID = Column(String(255), nullable=False)
+        Operation = Column(String(255), nullable=False)
+        GameID = Column(String(255), nullable=False)
+        Completed = Column(Boolean, nullable=False)
+        TimeStamp = Column(Numeric(20,6), nullable=False)
+    return DownloadRequestModel

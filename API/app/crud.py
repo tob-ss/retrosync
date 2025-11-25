@@ -20,3 +20,11 @@ def create_uploadrequest(db: Session, uploadrequest: schemas.UploadRequestCreate
     db.commit()
     db.refresh(db_uploadrequest)
     return db_uploadrequest
+
+def create_downloadrequest(db: Session, downloadrequest: schemas.DownloadRequestCreate):
+    from main import DownloadRequestModel
+    db_downloadrequest = DownloadRequestModel(DeviceID=downloadrequest.DeviceID, Operation=downloadrequest.Operation, GameID=downloadrequest.GameID, Completed=downloadrequest.Completed, TimeStamp=downloadrequest.TimeStamp)
+    db.add(db_downloadrequest)
+    db.commit()
+    db.refresh(db_downloadrequest)
+    return db_downloadrequest
