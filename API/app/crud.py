@@ -1,17 +1,16 @@
 from sqlalchemy.orm import Session
 import models, schemas
-from models import create_dynamic_localmetadata
 
-def create_localmetadata(db: Session, localmetadata: schemas.LocalMetadataCreate):
-    from main import LocalMetadataModel
-    check_row = db.query(LocalMetadataModel).filter(LocalMetadataModel.GameID == localmetadata.GameID).first()
+def create_metadata(db: Session, metadata: schemas.MetadataCreate):
+    from main import MetadataModel
+    check_row = db.query(MetadataModel).filter(MetadataModel.GameID == metadata.GameID).first()
     if check_row:
         db.delete(check_row)
-    db_localmetadata = LocalMetadataModel(GameID=localmetadata.GameID, GameName=localmetadata.GameName, LastModified=localmetadata.LastModified, DeviceID=localmetadata.DeviceID)
-    db.add(db_localmetadata)
+    db_metadata = MetadataModel(GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID)
+    db.add(db_metadata)
     db.commit()
-    db.refresh(db_localmetadata)
-    return db_localmetadata
+    db.refresh(db_metadata)
+    return db_metadata
 
 def create_uploadrequest(db: Session, uploadrequest: schemas.UploadRequestCreate):
     from main import UploadRequestModel
