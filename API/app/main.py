@@ -27,9 +27,9 @@ def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session
 def create_downloadrequest(downloadrequest: schemas.DownloadRequestCreate, db: Session = Depends(get_db)):
     return crud.create_downloadrequest(db, downloadrequest)
 
-@app.post("/daemon/", response_model=schemas.DaemonStatus)
-def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
-    return crud.create_daemonstatus(db, daemonstatus)
+#@app.post("/daemon/", response_model=schemas.DaemonStatus)
+#def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
+#    return crud.create_daemonstatus(db, daemonstatus)
 
 """
 
