@@ -1,16 +1,16 @@
 from pydantic import BaseModel
 from decimal import Decimal
 
-class LocalMetadataBase(BaseModel):
+class MetadataBase(BaseModel):
     GameID: str
     GameName: str
     LastModified: Decimal
     DeviceID: str
 
-class LocalMetadataCreate(LocalMetadataBase):
+class MetadataCreate(MetadataBase):
     pass
 
-class LocalMetadata(LocalMetadataBase):
+class Metadata(MetadataBase):
     GameID: str
 
     class Config:
