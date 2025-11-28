@@ -6,11 +6,12 @@ import models, schemas, crud
 from sqlalchemy.orm import Session
 
 class LocalMetadataProcessor:
-    def __init__(self, JSON):
-        self.JSON = JSON
+    def __init__(self, localmetadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+        self.localmetadata = localmetadata
+        self.db = db
 
     def print_LMD(self): 
-        print(f"I got the JSON {self.JSON}")
+        print(f"I got the JSON {self.localmetadata}")
 
-    def append_LMD(localmetadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
-        return crud.create_metadata(db, localmetadata)
+    def append_LMD(self):
+        return crud.create_metadata(self.db, self.localmetadata)
