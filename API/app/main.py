@@ -4,7 +4,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_uploadrequest, create_dynamic_downloadrequest
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP
+from classes import LocalMetadataProcessor as LMP, CloudMetadataProcessor as CMP
 
 app = FastAPI()
 
@@ -16,10 +16,15 @@ Base.metadata.create_all(bind=engine)
 
 
 
-@app.post("/metadata/", response_model=schemas.Metadata)
+@app.post("/metadata/local", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     append_LMD = LMP(db, metadata)
     return append_LMD.append_LMD()
+
+@app.post("/metadata/cloud", response_model=schemas.Metadata)
+def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    append_CMD = CMP(db, metadata)
+    return append_CMD.append_CMD()
 
 @app.post("/upload/", response_model=schemas.UploadRequest)
 def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session = Depends(get_db)):

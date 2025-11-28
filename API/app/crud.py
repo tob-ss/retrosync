@@ -12,6 +12,14 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
     db.refresh(db_metadata)
     return db_metadata
 
+def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
+    from main import MetadataModel
+    db_metadata = MetadataModel(GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
+    db.add(db_metadata)
+    db.commit()
+    db.refresh(db_metadata)
+    return db_metadata
+
 def create_uploadrequest(db: Session, uploadrequest: schemas.UploadRequestCreate):
     from main import UploadRequestModel
     db_uploadrequest = UploadRequestModel(DeviceID=uploadrequest.DeviceID, Operation=uploadrequest.Operation, GameID=uploadrequest.GameID, Completed=uploadrequest.Completed, TimeStamp=uploadrequest.TimeStamp)

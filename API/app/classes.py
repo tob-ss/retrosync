@@ -15,3 +15,14 @@ class LocalMetadataProcessor:
 
     def append_LMD(self):
         return crud.create_metadata(self.db, self.localmetadata)
+    
+class CloudMetadataProcessor:
+    def __init__(self, db: Session, cloudmetadata: schemas.MetadataCreate):
+        self.cloudmetadata = cloudmetadata
+        self.db = db
+
+    def print_CMD(self): 
+        print(f"I got the JSON {self.cloudmetadata}")
+
+    def append_CMD(self):
+        return crud.create_metadata_cloud(self.db, self.cloudmetadata)
