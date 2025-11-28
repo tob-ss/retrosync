@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from decimal import Decimal
 
 class MetadataBase(BaseModel):
-    LID: int
+    LID: str
     GameID: str
     GameName: str
     LastModified: Decimal

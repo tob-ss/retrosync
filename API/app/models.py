@@ -7,12 +7,12 @@ def create_dynamic_metadata(customer_prefix):
         __tablename__ = f"{customer_prefix}_metadata"
         
         ID = Column(Integer, primary_key=True, index=True)
-        LID = Column(Integer, nullable=False)
+        LID = Column(String(2), nullable=False)
         GameID = Column(String(50), nullable=False)
         GameName = Column(String(255), nullable=False)
         LastModified = Column(Numeric(20,6), nullable=False)
-        DeviceID = Column(String(255), nullable=False)
-        Cloud = Column(String(255), nullable=False)
+        DeviceID = Column(String(50), nullable=False)
+        Cloud = Column(String(3), nullable=False)
     return MetadataModel
 
 def create_dynamic_uploadrequest(customer_prefix):
