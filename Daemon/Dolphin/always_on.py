@@ -23,7 +23,7 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-url = "http://37.27.217.84/metadata/local/"
+url = "http://37.27.217.84/metadata/cloud/"
 
 while True:
 
@@ -65,7 +65,7 @@ while True:
         metadata.dolphin_metadata()
         for n in metadata.dolphin_metadata():
             n.update({"DeviceID": "Test Device"})
-            n.update({"Cloud": "No"})
+            n.update({"Cloud": "Yes"})
             post_request = requests.post(url, json = n)
             print(post_request.text)
     else:
