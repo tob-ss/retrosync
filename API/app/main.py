@@ -18,6 +18,7 @@ Base.metadata.create_all(bind=engine)
 
 @app.post("/metadata/", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    print("did it get here?")
     append_LMD = LMP(db, metadata)
     return append_LMD
 
