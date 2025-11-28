@@ -9,6 +9,7 @@ def create_dynamic_metadata(customer_prefix):
         GameName = Column(String(255), nullable=False)
         LastModified = Column(Numeric(20,6), nullable=False)
         DeviceID = Column(String(255), nullable=False)
+        Cloud = Column(String(255), nullable=False)
     return MetadataModel
 
 def create_dynamic_uploadrequest(customer_prefix):

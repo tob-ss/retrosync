@@ -65,6 +65,7 @@ while True:
         metadata.dolphin_metadata()
         for n in metadata.dolphin_metadata():
             n.update({"DeviceID": "Test Device"})
+            n.update({"Cloud": "No"})
             post_request = requests.post(url, json = n)
             print(post_request.text)
     else:

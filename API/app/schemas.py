@@ -6,6 +6,7 @@ class MetadataBase(BaseModel):
     GameName: str
     LastModified: Decimal
     DeviceID: str
+    Cloud: str
 
 class MetadataCreate(MetadataBase):
     pass

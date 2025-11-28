@@ -6,7 +6,7 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
     check_row = db.query(MetadataModel).filter(MetadataModel.GameID == metadata.GameID).first()
     if check_row:
         db.delete(check_row)
-    db_metadata = MetadataModel(GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID)
+    db_metadata = MetadataModel(GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
     db.add(db_metadata)
     db.commit()
     db.refresh(db_metadata)
