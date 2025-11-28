@@ -14,7 +14,7 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
 
 def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
     from main import MetadataModel
-    db_metadata = MetadataModel(GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
+    db_metadata = MetadataModel(LID=metadata.LID, GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
     db.add(db_metadata)
     db.commit()
     db.refresh(db_metadata)
