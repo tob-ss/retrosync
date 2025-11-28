@@ -14,11 +14,12 @@ DownloadRequestModel = create_dynamic_downloadrequest("test")
 
 Base.metadata.create_all(bind=engine)
 
+append_LMD = LMP.append_LMD
+
 @app.post("/metadata/", response_model=schemas.Metadata)
-def create_metadata(metadata):
-    print(f"Got: {metadata}")
-    LMP.print_LMD(metadata)
-    return LMP.append_LMD(metadata)
+def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    
+    return crud.create_metadata(db, metadata)
 
 @app.post("/upload/", response_model=schemas.UploadRequest)
 def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session = Depends(get_db)):

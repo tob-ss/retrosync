@@ -6,7 +6,7 @@ import models, schemas, crud
 from sqlalchemy.orm import Session
 
 class LocalMetadataProcessor:
-    def __init__(self, localmetadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
         self.localmetadata = localmetadata
         self.db = db
 
