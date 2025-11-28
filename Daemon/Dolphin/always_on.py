@@ -64,8 +64,13 @@ while True:
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
         for n in metadata.dolphin_metadata():
+            if url == "http://37.27.217.84/metadata/cloud/":
+                n.update({"LID": "CL"})
+                n.update({"Cloud": "Yes"})
+            else:
+                n.update({"LID": "L"})
+                n.update({"Cloud": "No"})
             n.update({"DeviceID": "Test Device"})
-            n.update({"Cloud": "Yes"})
             post_request = requests.post(url, json = n)
             print(post_request.text)
     else:
