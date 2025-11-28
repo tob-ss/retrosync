@@ -5,7 +5,10 @@ from database import Base
 def create_dynamic_metadata(customer_prefix):
     class MetadataModel(Base):
         __tablename__ = f"{customer_prefix}_metadata"
-        GameID = Column(String(50), primary_key=True, nullable=False)
+        
+        ID = Column(Integer, primary_key=True, index=True)
+        LID = Column(Integer, nullable=False)
+        GameID = Column(String(50), nullable=False)
         GameName = Column(String(255), nullable=False)
         LastModified = Column(Numeric(20,6), nullable=False)
         DeviceID = Column(String(255), nullable=False)

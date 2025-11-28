@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from decimal import Decimal
 
 class MetadataBase(BaseModel):
+    LID: int
     GameID: str
     GameName: str
     LastModified: Decimal
@@ -12,7 +13,7 @@ class MetadataCreate(MetadataBase):
     pass
 
 class Metadata(MetadataBase):
-    GameID: str
+    ID: int
 
     class Config:
         orm_mode = True
