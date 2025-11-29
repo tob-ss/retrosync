@@ -13,7 +13,7 @@ def cli():
 @click.option('--all', '-a', is_flag=True, help='Upload all game saves on device.')
 def upload(device, game, all):
     """Choose which game saves you would like to upload!"""
-    url = "http://37.27.217.84/upload/"
+    url = "http://37.27.217.84//sync/append/"
     if all and game:
         raise click.BadParameter((click.style("To upload all game saves, please omit the --game or -g flag.", fg='red')))
     if all == False:
@@ -35,7 +35,7 @@ def upload(device, game, all):
 @click.option('--all', '-a', is_flag=True, help='Download all game saves to device.')
 def download(device, game, all):
     """Choose which game saves you would like to download!"""
-    url = "http://37.27.217.84/download/"
+    url = "http://37.27.217.84//sync/append/"
     if all and game:
         raise click.BadParameter((click.style("To download all game saves, please omit the --game or -g flag.", fg='red')))
     if all == False:

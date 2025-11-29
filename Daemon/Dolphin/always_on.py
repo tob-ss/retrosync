@@ -23,7 +23,7 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-url = "http://37.27.217.84/metadata/local/"
+url = "http://37.27.217.84/metadata/append/"
 
 while True:
 
@@ -61,10 +61,12 @@ while True:
 
     old_list_modified_date = new_list_modified_date
 
+    x = 0
+
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
         for n in metadata.dolphin_metadata():
-            if url == "http://37.27.217.84/metadata/cloud/":
+            if x == 0:
                 n.update({"LID": "CL"})
                 n.update({"Cloud": "Yes"})
             else:

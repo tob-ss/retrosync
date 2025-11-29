@@ -18,33 +18,17 @@ class Metadata(MetadataBase):
     class Config:
         orm_mode = True
 
-class UploadRequestBase(BaseModel):
+class SyncRequestsBase(BaseModel):
     DeviceID: str
     Operation: str
     GameID: str
     Completed: bool
     TimeStamp: Decimal
 
-class UploadRequestCreate(UploadRequestBase):
+class SyncRequestsCreate(SyncRequestsBase):
     pass 
 
-class UploadRequest(UploadRequestBase):
-    RequestID: int
-
-    class Config: 
-        orm_mode = True
-
-class DownloadRequestBase(BaseModel):
-    DeviceID: str
-    Operation: str
-    GameID: str
-    Completed: bool
-    TimeStamp: Decimal
-
-class DownloadRequestCreate(DownloadRequestBase):
-    pass 
-
-class DownloadRequest(DownloadRequestBase):
+class SyncRequests(SyncRequestsBase):
     RequestID: int
 
     class Config: 

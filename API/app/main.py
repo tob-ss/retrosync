@@ -1,38 +1,30 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, Depends
 from database import engine, Base, get_db
-from models import create_dynamic_metadata, create_dynamic_uploadrequest, create_dynamic_downloadrequest
+from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP, CloudMetadataProcessor as CMP
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP
 
 app = FastAPI()
 
 MetadataModel = create_dynamic_metadata("test")
-UploadRequestModel = create_dynamic_uploadrequest("test")
-DownloadRequestModel = create_dynamic_downloadrequest("test")
+SyncRequestModel = create_dynamic_syncrequests("test")
+
 
 Base.metadata.create_all(bind=engine)
 
 
 
-@app.post("/metadata/local", response_model=schemas.Metadata)
+@app.post("/metadata/append", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     append_LMD = LMP(db, metadata)
-    return append_LMD.append_LMD()
+    return append_LMD.append_metadata()
 
-@app.post("/metadata/cloud", response_model=schemas.Metadata)
-def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
-    append_CMD = CMP(db, metadata)
-    return append_CMD.append_CMD()
-
-@app.post("/upload/", response_model=schemas.UploadRequest)
-def create_uploadrequest(uploadrequest: schemas.UploadRequestCreate, db: Session = Depends(get_db)):
-    return crud.create_uploadrequest(db, uploadrequest)
-
-@app.post("/download/", response_model=schemas.DownloadRequest)
-def create_downloadrequest(downloadrequest: schemas.DownloadRequestCreate, db: Session = Depends(get_db)):
-    return crud.create_downloadrequest(db, downloadrequest)
+@app.post("/sync/append", response_model=schemas.SyncRequests)
+def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
+    append_SR = SRP(db, syncrequest)
+    return append_SR.append_syncrequest()
 
 #@app.post("/daemon/", response_model=schemas.DaemonStatus)
 #def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):

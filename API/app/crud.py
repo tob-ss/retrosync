@@ -20,13 +20,13 @@ def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
     db.refresh(db_metadata)
     return db_metadata
 
-def create_uploadrequest(db: Session, uploadrequest: schemas.UploadRequestCreate):
-    from main import UploadRequestModel
-    db_uploadrequest = UploadRequestModel(DeviceID=uploadrequest.DeviceID, Operation=uploadrequest.Operation, GameID=uploadrequest.GameID, Completed=uploadrequest.Completed, TimeStamp=uploadrequest.TimeStamp)
-    db.add(db_uploadrequest)
+def create_syncrequest(db: Session, syncrequest: schemas.SyncRequestsCreate):
+    from main import SyncRequestModel
+    db_syncrequest = SyncRequestModel(DeviceID=syncrequest.DeviceID, Operation=syncrequest.Operation, GameID=syncrequest.GameID, Completed=syncrequest.Completed, TimeStamp=syncrequest.TimeStamp)
+    db.add(db_syncrequest)
     db.commit()
-    db.refresh(db_uploadrequest)
-    return db_uploadrequest
+    db.refresh(db_syncrequest)
+    return db_syncrequest
 
 def create_downloadrequest(db: Session, downloadrequest: schemas.DownloadRequestCreate):
     from main import DownloadRequestModel

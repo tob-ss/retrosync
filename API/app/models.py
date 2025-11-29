@@ -15,27 +15,16 @@ def create_dynamic_metadata(customer_prefix):
         Cloud = Column(String(3), nullable=False)
     return MetadataModel
 
-def create_dynamic_uploadrequest(customer_prefix):
-    class UploadRequestModel(Base):
-        __tablename__ = f"{customer_prefix}_uploadrequests"
+def create_dynamic_syncrequests(customer_prefix):
+    class SyncRequestsModel(Base):
+        __tablename__ = f"{customer_prefix}_syncrequests"
         RequestID = Column(Integer, primary_key=True, index=True)
         DeviceID = Column(String(255), nullable=False)
         Operation = Column(String(255), nullable=False)
         GameID = Column(String(255), nullable=False)
         Completed = Column(Boolean, nullable=False)
         TimeStamp = Column(Numeric(20,6), nullable=False)
-    return UploadRequestModel
-
-def create_dynamic_downloadrequest(customer_prefix):
-    class DownloadRequestModel(Base):
-        __tablename__ = f"{customer_prefix}_downloadrequests"
-        RequestID = Column(Integer, primary_key=True, index=True)
-        DeviceID = Column(String(255), nullable=False)
-        Operation = Column(String(255), nullable=False)
-        GameID = Column(String(255), nullable=False)
-        Completed = Column(Boolean, nullable=False)
-        TimeStamp = Column(Numeric(20,6), nullable=False)
-    return DownloadRequestModel
+    return SyncRequestsModel
 
 def create_dynamic_daemonstatus(customer_prefix):
     class DaemonStatusModel(Base):

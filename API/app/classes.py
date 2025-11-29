@@ -10,19 +10,16 @@ class LocalMetadataProcessor:
         self.localmetadata = localmetadata
         self.db = db
 
-    def print_LMD(self): 
-        print(f"I got the JSON {self.localmetadata}")
-
-    def append_LMD(self):
-        return crud.create_metadata(self.db, self.localmetadata)
-    
-class CloudMetadataProcessor:
-    def __init__(self, db: Session, cloudmetadata: schemas.MetadataCreate):
-        self.cloudmetadata = cloudmetadata
+    def append_metadata(self):
+        if self.localmetadata.LID == "CL":
+            return crud.create_metadata_cloud(self.db, self.localmetadata)
+        else:
+            return crud.create_metadata(self.db, self.localmetadata)
+            
+class SyncRequestProcessor:
+    def __init__(self, db: Session, syncrequest: schemas.SyncRequestsCreate):
+        self.syncrequest = syncrequest
         self.db = db
 
-    def print_CMD(self): 
-        print(f"I got the JSON {self.cloudmetadata}")
-
-    def append_CMD(self):
-        return crud.create_metadata_cloud(self.db, self.cloudmetadata)
+    def append_syncrequest(self):
+        return crud.create_syncrequest(self.db, self.syncrequest)
