@@ -27,11 +27,3 @@ def create_syncrequest(db: Session, syncrequest: schemas.SyncRequestsCreate):
     db.commit()
     db.refresh(db_syncrequest)
     return db_syncrequest
-
-def create_downloadrequest(db: Session, downloadrequest: schemas.DownloadRequestCreate):
-    from main import DownloadRequestModel
-    db_downloadrequest = DownloadRequestModel(DeviceID=downloadrequest.DeviceID, Operation=downloadrequest.Operation, GameID=downloadrequest.GameID, Completed=downloadrequest.Completed, TimeStamp=downloadrequest.TimeStamp)
-    db.add(db_downloadrequest)
-    db.commit()
-    db.refresh(db_downloadrequest)
-    return db_downloadrequest
