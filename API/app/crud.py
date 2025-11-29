@@ -14,7 +14,7 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
 
 def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
     from main import MetadataModel
-    check_row = db.query(MetadataModel).filter(MetadataModel.LID == metadata.LID, MetadataModel.GameID == metadata.GameID,  MetadataModel.LastModified == metadata.LastModified).first()
+    check_row = db.query(MetadataModel).filter(MetadataModel.LID == metadata.LID, MetadataModel.LastModified == metadata.LastModified).first()
     print(check_row)
     if check_row:
         db.delete(check_row)
