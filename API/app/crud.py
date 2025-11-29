@@ -15,7 +15,7 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
 
 def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
     from main import MetadataModel
-    check_row = db.query(MetadataModel).filter(and_(MetadataModel.LID == metadata.LID, MetadataModel.LastModified == metadata.LastModified)).first()
+    check_row = db.query(MetadataModel).filter(and_(MetadataModel.LID == metadata.LID, MetadataModel.LastModified == metadata.LastModified)).all()
     print(check_row)
     if check_row:
         db.delete(check_row)
