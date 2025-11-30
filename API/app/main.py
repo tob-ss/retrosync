@@ -21,7 +21,7 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
     print(metadata.LID)
     delete_dupes = DCR(db, metadata.LID)
     #append_LMD = LMP(db, metadata)
-    return delete_dupes.get_gamesby_LID()
+    #return delete_dupes.get_gamesby_LID()
     #return append_LMD.append_metadata()
 
 @app.post("/sync/append", response_model=schemas.SyncRequests)
