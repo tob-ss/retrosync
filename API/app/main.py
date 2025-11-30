@@ -4,7 +4,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR
 
 app = FastAPI()
 
@@ -18,8 +18,10 @@ Base.metadata.create_all(bind=engine)
 
 @app.post("/metadata/append", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    delete_dupes = DCR(db, metadata.LID)
     append_LMD = LMP(db, metadata)
-    return append_LMD.append_metadata()
+    return delete_dupes.delete_dupe_games()
+    #return append_LMD.append_metadata()
 
 @app.post("/sync/append", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):

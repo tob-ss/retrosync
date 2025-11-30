@@ -23,3 +23,15 @@ class SyncRequestProcessor:
 
     def append_syncrequest(self):
         return crud.create_syncrequest(self.db, self.syncrequest)
+    
+class DupeCloudMDRemover:
+    def __init__(self, db: Session, LID: str):
+        self.db = db
+        self.LID = LID
+
+    def get_gamesby_LID(self):
+        from main import MetadataModel
+        return self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID)
+    
+    def delete_dupe_games(self):
+        print(self.get_gamesby_LID())
