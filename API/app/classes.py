@@ -31,7 +31,7 @@ class DupeCloudMDRemover:
 
     def get_gamesby_LID(self):
         from main import MetadataModel
-        return self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).first()
+        return self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
     
-    def delete_dupe_games(self):
-        print(self.get_gamesby_LID())
+    #def delete_dupe_games(self):
+    #    print(self.get_gamesby_LID())
