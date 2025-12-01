@@ -61,7 +61,7 @@ while True:
 
     old_list_modified_date = new_list_modified_date
 
-    x = 1
+    x = 0
 
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
