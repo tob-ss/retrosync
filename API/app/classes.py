@@ -28,19 +28,15 @@ class LocalMetadataFlusher:
         from main import MetadataModel
         #print(f"{MetadataModel.LID} and {MetadataModel.DeviceID}")
         db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == self.DeviceID).all()
-        #print("i didn't get here successfully")
-        print("debug0")
-        print(db_localmetadata)
-        for x in db_localmetadata:
-            print("debug1")
-            if x.LID == "L" and x.DeviceID == self.DeviceID:
-                print("debug2")
-                self.db.delete(x)
-                print("debug3")
-                self.db.commit()
-                print("i didn't get here successfully")
-            else: 
-                continue
+        if db_localmetadata:
+            for x in db_localmetadata:
+                if x.LID == "L" and x.DeviceID == self.DeviceID:
+                    self.db.delete(x)
+                    self.db.commit()
+                else: 
+                    continue
+        else:
+            pass
 
             
 class SyncRequestProcessor:
