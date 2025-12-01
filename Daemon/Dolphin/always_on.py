@@ -23,7 +23,8 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-url = "http://37.27.217.84/metadata/append/"
+add_metadata = "http://37.27.217.84/metadata/append/"
+flush_local = "http://37.27.217.84/metadata/delete/localflush"
 
 while True:
 
@@ -61,10 +62,12 @@ while True:
 
     old_list_modified_date = new_list_modified_date
 
-    x = 0
+    x = 1
 
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
+        DeviceID_local = {"DeviceID": "Test Device"}
+        flush_localmetata = requests.delete(flush_local, json = DeviceID_local)
         for n in metadata.dolphin_metadata():
             if x == 0:
                 n.update({"LID": "CL"})
@@ -73,7 +76,7 @@ while True:
                 n.update({"LID": "L"})
                 n.update({"Cloud": "No"})
             n.update({"DeviceID": "Test Device"})
-            post_request = requests.post(url, json = n)
+            post_request = requests.post(add_metadata, json = n)
             print(post_request.text)
     else:
         pass

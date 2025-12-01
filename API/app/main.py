@@ -23,6 +23,13 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
     append_LMD = LMP(db, metadata)
     return append_LMD.append_metadata()
 
+@app.delete("/metadata/delete/localflush", response_model=schemas.Metadata)
+def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
+    db_localmetadata = crud.flush_localmetadata(db, DeviceID=DeviceID)
+    if db_localmetadata is None:
+        raise HTTPException(status_code=404, detail="Device not found")
+    return db_localmetadata
+
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
     append_SR = SRP(db, syncrequest)
