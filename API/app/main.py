@@ -33,9 +33,12 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
 
 @app.post("/metadata/delete/localflush/", response_model=schemas.Metadata)
 def flush_localmetadata(DeviceID: schemas.Metadata_Device, db: Session = Depends(get_db)):
-    print(DeviceID)
-    flush_LMD = LMF(db, DeviceID)
-    return flush_LMD.flush_metadata()
+    try:
+        print(DeviceID)
+        flush_LMD = LMF(db, DeviceID)
+        return flush_LMD.flush_metadata()
+    except Exception:
+        raise HTTPException(status_code=406, detail="New Error Found")
 
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
