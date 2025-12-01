@@ -12,7 +12,7 @@ class MetadataBase(BaseModel):
 class MetadataCreate(MetadataBase):
     pass
 
-class Metadata(MetadataBase):
+class Metadata(BaseModel):
     ID: int
     DeviceID: str
 
