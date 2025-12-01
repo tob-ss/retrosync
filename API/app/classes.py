@@ -30,11 +30,10 @@ class DupeCloudMDRemover:
         self.db = db
         self.LID = LID
         self.GameID = GameID
-        self.LastModified = LastModified
+        self.LastModified = LastModified.quantize(Decimal('0.000000'))
 
     def get_gamesby_LID(self):
         from main import MetadataModel
-        getcontext().prec = 6
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
             duplicate_row = self.db.query(MetadataModel).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
