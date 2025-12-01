@@ -37,7 +37,7 @@ class LocalMetadataFlusher:
                     print("debug6") 
                     continue
                 else:
-                    print("debug2")
+                    print(f"debug2: {x}")
                     if x.LID == "L" and x.DeviceID == self.DeviceID:
                         print("debug3")
                         self.db.delete(x)
