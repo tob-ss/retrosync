@@ -38,7 +38,7 @@ class DupeCloudMDRemover:
         from main import MetadataModel
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
-            duplicate_row = self.db.query(MetadataModel).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
+            duplicate_row = self.db.query(LID_table).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
             print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
             print(duplicate_row)
             if duplicate_row:
