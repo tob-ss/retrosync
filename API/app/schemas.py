@@ -12,14 +12,14 @@ class MetadataBase(BaseModel):
 class MetadataCreate(MetadataBase):
     pass
 
-class Metadata(BaseModel):
+class Metadata(MetadataBase):
     ID: int
     DeviceID: str
 
     class Config:
         orm_mode = True
 
-class Metadata_Device(MetadataBase):
+class Metadata_Device(BaseModel):
     DeviceID: str
 
 class SyncRequestsBase(BaseModel):
