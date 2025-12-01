@@ -13,7 +13,7 @@ class LocalMetadataProcessor:
 
     def append_metadata(self):
         if self.localmetadata.LID == "CL":
-            delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified)
+            delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
             delete_dupes.get_gamesby_LID()
             return crud.create_metadata_cloud(self.db, self.localmetadata)
         else:
@@ -28,22 +28,23 @@ class SyncRequestProcessor:
         return crud.create_syncrequest(self.db, self.syncrequest)
     
 class DupeCloudMDRemover:
-    def __init__(self, db: Session, LID: str, GameID: str, LastModified: Decimal):
+    def __init__(self, db: Session, LID: str, GameID: str, LastModified: Decimal, DeviceID: str):
         self.db = db
         self.LID = LID
         self.GameID = GameID
         self.LastModified = LastModified.quantize(Decimal('0.000000'))
+        self.DeviceID = DeviceID
 
     def get_gamesby_LID(self):
         from main import MetadataModel
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
-            if x.LID == "CL" and x.GameID == self.GameID and x.LastModified == self.LastModified:
+            if x.LID == "CL" and x.GameID == self.GameID and x.LastModified == self.LastModified and x.DeviceID == self.DeviceID:
                 self.db.delete(x)
                 self.db.commit()
             else: 
                 continue
-            print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
+            #print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
             #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
             
         #return LID_table
