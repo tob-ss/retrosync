@@ -14,6 +14,7 @@ class MetadataCreate(MetadataBase):
 
 class Metadata(MetadataBase):
     ID: int
+    DeviceID: str
 
     class Config:
         orm_mode = True
