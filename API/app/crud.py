@@ -14,6 +14,7 @@ def create_metadata(db: Session, metadata: schemas.MetadataCreate):
 def flush_localmetadata(db: Session, DeviceID: str):
     from main import MetadataModel
     db_localmetadata = db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == DeviceID)
+    print(f"Got the following DeviceID: {DeviceID}")
     if db_localmetadata:
         db.delete(db_localmetadata)
         db.commit()
