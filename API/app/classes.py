@@ -4,7 +4,6 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from sqlalchemy import select
 from decimal import Decimal, getcontext
 
 class LocalMetadataProcessor:
@@ -39,18 +38,14 @@ class DupeCloudMDRemover:
         from main import MetadataModel
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
-            duplicate_row = select(LID_table)
-            #duplicate_row = select(LID_table).where(x.GameID == self.GameID, x.LastModified == self.LastModified)
-            print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
-            print(duplicate_row)
-            if duplicate_row:
-                print("I would delete a dupe record now!")
-                self.db.delete(duplicate_row)
-                return duplicate_row
-            else:
+            if x.LID == "CL" and x.GameID == self.GameID and x.LastModified == self.LastModified:
+                self.db.delete(x)
+                self.db.commit()
+            else: 
                 continue
+            print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
             #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
-            self.db.commit()
+            
         #return LID_table
     #def delete_dupe_games(self):
     #    print(self.get_gamesby_LID())
