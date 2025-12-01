@@ -36,7 +36,6 @@ class DupeCloudMDRemover:
         from main import MetadataModel
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
-            print(x)
             duplicate_row = self.db.query(MetadataModel).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
             if duplicate_row:
                 print("I would delete a dupe record now!")
