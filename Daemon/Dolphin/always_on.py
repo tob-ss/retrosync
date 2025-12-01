@@ -66,7 +66,7 @@ while True:
 
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
-        DeviceID_local = {"DeviceID": "Test Device"}
+        DeviceID_local = {"Test Device"}
         flush_localmetata = requests.delete(flush_local, json = DeviceID_local)
         print(flush_localmetata)
         for n in metadata.dolphin_metadata():
