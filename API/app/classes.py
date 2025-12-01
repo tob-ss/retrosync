@@ -31,6 +31,7 @@ class LocalMetadataFlusher:
         #print(MetadataModel.LID)
         for x in db_localmetadata:
             if x.LID == "L" and x.DeviceID == self.DeviceID:
+                print("debug0")
                 self.db.delete(x)
                 self.db.commit()
             else:
