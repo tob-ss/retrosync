@@ -1,5 +1,8 @@
 from typing import Union
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
@@ -14,7 +17,12 @@ SyncRequestModel = create_dynamic_syncrequests("test")
 
 Base.metadata.create_all(bind=engine)
 
-
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder({"detail": exc.errors(), "Error": "Name field is missing"}),
+    )
 
 @app.post("/metadata/append/", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):

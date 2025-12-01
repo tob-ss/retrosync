@@ -20,7 +20,7 @@ class Metadata(MetadataBase):
         orm_mode = True
 
 class Metadata_Device(BaseModel):
-    pass
+    DeviceID: str
 
 class SyncRequestsBase(BaseModel):
     DeviceID: str
