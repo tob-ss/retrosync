@@ -29,6 +29,7 @@ class LocalMetadataFlusher:
         #print(f"{MetadataModel.LID} and {MetadataModel.DeviceID}")
         db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == self.DeviceID).all()
         print("debug0")
+        print(db_localmetadata)
         if not db_localmetadata is None:
             print("debug1")
             for x in db_localmetadata:
