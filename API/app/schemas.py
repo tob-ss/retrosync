@@ -19,6 +19,9 @@ class Metadata(MetadataBase):
     class Config:
         orm_mode = True
 
+class Metadata_Device(MetadataBase):
+    DeviceID: str
+
 class SyncRequestsBase(BaseModel):
     DeviceID: str
     Operation: str
