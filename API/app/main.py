@@ -16,7 +16,7 @@ Base.metadata.create_all(bind=engine)
 
 
 
-@app.post("/metadata/append", response_model=schemas.Metadata)
+@app.post("/metadata/append/", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     Base.metadata.create_all(bind=engine)
     Create_Table = MetadataModel()
@@ -25,7 +25,7 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
     append_LMD = LMP(db, metadata)
     return append_LMD.append_metadata()
 
-@app.post("/sync/append", response_model=schemas.SyncRequests)
+@app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
     append_SR = SRP(db, syncrequest)
     return append_SR.append_syncrequest()
