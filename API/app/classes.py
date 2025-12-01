@@ -37,7 +37,7 @@ class LocalMetadataFlusher:
                 
             else:
                 continue
-        return {"Device ID": "Just work bruv"}
+        return {"DeviceID": "Just work bruv"}
         """
         print("debug0")
         print(db_localmetadata)
