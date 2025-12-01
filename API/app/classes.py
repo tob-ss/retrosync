@@ -34,6 +34,7 @@ class LocalMetadataFlusher:
                 print("debug0")
                 self.db.delete(x)
                 self.db.commit()
+                return x
             else:
                 continue
         return None
