@@ -36,6 +36,8 @@ class LocalMetadataFlusher:
             if x.LID == "L" and x.DeviceID == self.DeviceID:
                 self.db.delete(x)
                 self.db.commit()
+                if x == None:
+                    break
             else:
                 continue
 
