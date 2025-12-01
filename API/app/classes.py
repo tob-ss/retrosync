@@ -36,7 +36,7 @@ class LocalMetadataFlusher:
                 self.db.commit()
             else:
                 continue
-        return {"Device ID": self.DeviceID}
+        return None
         """
         print("debug0")
         print(db_localmetadata)
