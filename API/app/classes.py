@@ -33,7 +33,10 @@ class LocalMetadataFlusher:
         if not db_localmetadata is None:
             print("debug1")
             for x in db_localmetadata:
-                if not db_localmetadata is None:
+                if db_localmetadata == []:
+                    print("debug6") 
+                    continue
+                else:
                     print("debug2")
                     if x.LID == "L" and x.DeviceID == self.DeviceID:
                         print("debug3")
@@ -41,11 +44,10 @@ class LocalMetadataFlusher:
                         print("debug4")
                         self.db.commit()
                         print("debug5")
+                            
                     else:
-                        print("debug6") 
-                        continue
-                else:
-                    print("debug8")
+                        print("debug8")
+                        pass
         else:
             print("debug7")
             pass
