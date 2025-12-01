@@ -36,7 +36,7 @@ class LocalMetadataFlusher:
                 self.db.commit()
             else:
                 continue
-        return db_localmetadata
+        return "finished"
         """
         print("debug0")
         print(db_localmetadata)
