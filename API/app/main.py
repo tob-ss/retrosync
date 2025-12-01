@@ -20,11 +20,6 @@ Base.metadata.create_all(bind=engine)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     Base.metadata.create_all(bind=engine)
     Create_Table = MetadataModel()
-    print(Create_Table)
-    if Create_Table:
-        print("Created Table")
-    else:
-        print("Table already exists, I think")
     delete_dupes = DCR(db=db, LID=metadata.LID, GameID=metadata.GameID, LastModified=metadata.LastModified)
     delete_dupes.get_gamesby_LID()
     append_LMD = LMP(db, metadata)
