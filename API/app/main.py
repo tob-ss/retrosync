@@ -4,7 +4,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF
 
 app = FastAPI()
 
@@ -26,10 +26,8 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
 @app.delete("/metadata/delete/localflush/", response_model=schemas.Metadata)
 def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
     print("running the function")
-    db_localmetadata = crud.flush_localmetadata(db, DeviceID=DeviceID)
-    if db_localmetadata is None:
-        raise HTTPException(status_code=404, detail="Device not found")
-    return db_localmetadata
+    flush_LMD = LMF(db, DeviceID=DeviceID)
+    return flush_LMD.flush_metadata()
 
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):

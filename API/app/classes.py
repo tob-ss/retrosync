@@ -18,6 +18,22 @@ class LocalMetadataProcessor:
             return crud.create_metadata_cloud(self.db, self.localmetadata)
         else:
             return crud.create_metadata(self.db, self.localmetadata)
+        
+class LocalMetadataFlusher:
+    def __init__(self, db: Session, DeviceID: str):
+        self.DeviceID = DeviceID
+        self.db = db
+
+    def flush_metadata(self):
+        from main import MetadataModel
+        db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == self.DeviceID).all()
+        for x in db_localmetadata:
+            if x.LID == "L" and x.DeviceID == self.DeviceID:
+                self.db.delete(x)
+                self.db.commit()
+            else: 
+                continue
+
             
 class SyncRequestProcessor:
     def __init__(self, db: Session, syncrequest: schemas.SyncRequestsCreate):
