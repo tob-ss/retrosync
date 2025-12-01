@@ -44,7 +44,6 @@ class DupeCloudMDRemover:
                 continue
             #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
             self.db.commit()
-        return LID_table
         #return LID_table
     #def delete_dupe_games(self):
     #    print(self.get_gamesby_LID())
