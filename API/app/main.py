@@ -17,13 +17,6 @@ SyncRequestModel = create_dynamic_syncrequests("test")
 
 Base.metadata.create_all(bind=engine)
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({"detail": exc.errors(), "Error": "Name field is missing"}),
-    )
-
 @app.post("/metadata/append/", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     Base.metadata.create_all(bind=engine)
