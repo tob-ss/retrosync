@@ -69,7 +69,7 @@ while True:
         DeviceID_local = {}
         DeviceID_local.update({"DeviceID": "Test Device"})
         print(DeviceID_local)
-        flush_localmetata = requests.post(flush_local, json = DeviceID_local)
+        flush_localmetata = requests.delete(flush_local, json = DeviceID_local)
         print(flush_localmetata)
         for n in metadata.dolphin_metadata():
             if x == 0:
