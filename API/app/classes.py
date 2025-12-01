@@ -10,16 +10,6 @@ class LocalMetadataProcessor:
     def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
         self.localmetadata = localmetadata
         self.db = db
-        
-    def delete_oldlocalMD(self):
-        from main import MetadataModel
-        Filtered_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.localmetadata.LID, MetadataModel.DeviceID == self.localmetadata.DeviceID).all()
-        for x in Filtered_table:
-            if x.LID == "L" and x.DeviceID == self.localmetadata.DeviceID:
-                self.db.delete(x)
-                self.db.commit()
-            else:
-                continue
 
     def append_metadata(self):
         if self.localmetadata.LID == "CL":
@@ -27,7 +17,6 @@ class LocalMetadataProcessor:
             delete_dupes.get_gamesby_LID()
             return crud.create_metadata_cloud(self.db, self.localmetadata)
         else:
-            self.delete_oldlocalMD()
             return crud.create_metadata(self.db, self.localmetadata)
             
 class SyncRequestProcessor:
