@@ -26,7 +26,7 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
 @app.delete("/metadata/delete/localflush/", response_model=schemas.Metadata)
 def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
     print("running the function")
-    flush_LMD = LMF(db, DeviceID=DeviceID)
+    #flush_LMD = LMF(db, DeviceID=DeviceID)
     #return flush_LMD.flush_metadata()
 
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
