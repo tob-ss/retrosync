@@ -24,7 +24,7 @@ old_list_file_number_check = []
 old_list_modified_date = []
 
 add_metadata = "http://37.27.217.84/metadata/append/"
-flush_local = "http://37.27.217.84/metadata/delete/localflush"
+flush_local = "http://37.27.217.84/metadata/delete/localflush/"
 
 while True:
 
@@ -68,7 +68,8 @@ while True:
         metadata.dolphin_metadata()
         DeviceID_local = {}
         DeviceID_local.update({"DeviceID": "Test Device"})
-        flush_localmetata = requests.post(flush_local, data = "Test Device")
+        print(DeviceID_local)
+        flush_localmetata = requests.post(flush_local, data = {"DeviceID": "Test Device"})
         print(flush_localmetata)
         for n in metadata.dolphin_metadata():
             if x == 0:
