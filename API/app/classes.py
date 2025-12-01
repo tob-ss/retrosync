@@ -36,7 +36,7 @@ class LocalMetadataFlusher:
                 self.db.commit()
             else:
                 continue
-        return "finished"
+        return {"message": "database flushed"}
         """
         print("debug0")
         print(db_localmetadata)
