@@ -28,17 +28,11 @@ class LocalMetadataFlusher:
         from main import MetadataModel
         #print(f"{MetadataModel.LID} and {MetadataModel.DeviceID}")
         db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L").all()
-        print(MetadataModel.LID)
+        #print(MetadataModel.LID)
         for x in db_localmetadata:
-            print(x)
-            print(db_localmetadata)
-            if x == None:
-                break
             if x.LID == "L" and x.DeviceID == self.DeviceID:
                 self.db.delete(x)
                 self.db.commit()
-                if x == None:
-                    break
             else:
                 continue
 
