@@ -37,7 +37,7 @@ class DupeCloudMDRemover:
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
             duplicate_row = self.db.query(MetadataModel).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
-            print(f"current row game id is{x.GameID} and the gameid that has been passed in is {self.GameID}")
+            print(f"current row game id is{x.GameID} and the gameid that has been passed in is {self.GameID}. we are checking LID: {x.LID}, and the last mod comparison is as follows: row last mod is {x.LastModified} and the lastmod passed in is {self.LastModified}")
             print(duplicate_row)
             if duplicate_row:
                 print("I would delete a dupe record now!")
