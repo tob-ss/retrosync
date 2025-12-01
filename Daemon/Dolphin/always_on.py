@@ -66,9 +66,10 @@ while True:
 
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
-        DeviceID_local = {"Test Device"}
-        #flush_localmetata = requests.delete(flush_local, data = DeviceID_local)
-        #print(flush_localmetata)
+        DeviceID_local = {}
+        DeviceID_local.update({"DeviceID": "Test Device"})
+        flush_localmetata = requests.post(flush_local, json=DeviceID_local)
+        print(flush_localmetata)
         for n in metadata.dolphin_metadata():
             if x == 0:
                 n.update({"LID": "CL"})
