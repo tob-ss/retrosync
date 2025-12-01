@@ -19,6 +19,7 @@ Base.metadata.create_all(bind=engine)
 @app.post("/metadata/append", response_model=schemas.Metadata)
 def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
     Create_Table = MetadataModel()
+    print(Create_Table)
     if Create_Table:
         print("Created Table")
     else:
