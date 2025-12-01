@@ -29,8 +29,7 @@ def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
     try:
         print(DeviceID)
         flush_LMD = LMF(db, DeviceID)
-        flush_LMD.flush_metadata()
-    
+        return flush_LMD.flush_metadata()
     except Exception:
         raise HTTPException(status_code=406, detail="New Error Found")
 
