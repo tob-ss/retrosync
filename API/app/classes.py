@@ -27,7 +27,15 @@ class LocalMetadataFlusher:
     def flush_metadata(self):
         from main import MetadataModel
         #print(f"{MetadataModel.LID} and {MetadataModel.DeviceID}")
-        db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == self.DeviceID).all()
+        db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L").all()
+        for x in db_localmetadata:
+            if x.LID == "L" and x.DeviceID == self.DeviceID:
+                self.db.delete(x)
+                self.db.commit()
+            else:
+                continue
+
+        """
         print("debug0")
         print(db_localmetadata)
         if not db_localmetadata is None:
@@ -51,6 +59,7 @@ class LocalMetadataFlusher:
         else:
             print("debug7")
             pass
+        """
 
             
 class SyncRequestProcessor:
