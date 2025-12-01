@@ -13,6 +13,8 @@ class LocalMetadataProcessor:
 
     def append_metadata(self):
         if self.localmetadata.LID == "CL":
+            delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified)
+            delete_dupes.get_gamesby_LID()
             return crud.create_metadata_cloud(self.db, self.localmetadata)
         else:
             return crud.create_metadata(self.db, self.localmetadata)
