@@ -44,6 +44,7 @@ class DupeCloudMDRemover:
             if duplicate_row:
                 print("I would delete a dupe record now!")
                 self.db.delete(duplicate_row)
+                return duplicate_row
             else:
                 continue
             #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
