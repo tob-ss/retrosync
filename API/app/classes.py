@@ -4,7 +4,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from decimal import Decimal
+from decimal import Decimal, getcontext
 
 class LocalMetadataProcessor:
     def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
@@ -34,6 +34,7 @@ class DupeCloudMDRemover:
 
     def get_gamesby_LID(self):
         from main import MetadataModel
+        getcontext().prec = 6
         LID_table = self.db.query(MetadataModel).filter(MetadataModel.LID == self.LID).all()
         for x in LID_table:
             duplicate_row = self.db.query(MetadataModel).filter(x.GameID == self.GameID, x.LastModified == self.LastModified).first()
