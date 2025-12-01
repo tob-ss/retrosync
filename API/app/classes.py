@@ -44,7 +44,7 @@ class LocalMetadataFlusher:
                         print("debug4")
                         self.db.commit()
                         print("debug5")
-                            
+                        print(db_localmetadata)
                     else:
                         print("debug8")
                         pass
