@@ -26,7 +26,7 @@ class LocalMetadataFlusher:
 
     def flush_metadata(self):
         from main import MetadataModel
-        print("got here")
+        print(self.DeviceID)
         db_localmetadata = self.db.query(MetadataModel).filter(MetadataModel.LID == "L", MetadataModel.DeviceID == self.DeviceID).all()
         
         for x in db_localmetadata:
