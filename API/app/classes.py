@@ -44,7 +44,7 @@ class LocalMetadataFlusher:
                         print("debug4")
                         self.db.commit()
                         print("debug5")
-                        print(db_localmetadata)
+                        print(f"row LID is {x.LID} and row device is {x.DeviceID}")
                     else:
                         print("debug8")
                         pass
