@@ -13,7 +13,6 @@ class MetadataCreate(MetadataBase):
     pass
 
 class Metadata(BaseModel):
-    ID: int
     DeviceID: str
 
     class Config:
