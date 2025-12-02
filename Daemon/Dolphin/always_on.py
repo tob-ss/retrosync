@@ -38,7 +38,7 @@ requests.post(daemonstatus_url, json = daemonstatus_dict)
 while True:
 
     start_time = time.time()
-    delay = 60
+    delay = 30
 
     while time.time() - start_time < delay:
         trigger_metadata = 0
