@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from database import engine, Base, get_db
-from models import create_dynamic_metadata, create_dynamic_syncrequests
+from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
 from sqlalchemy.orm import Session
 from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF
@@ -13,7 +13,7 @@ app = FastAPI()
 
 MetadataModel = create_dynamic_metadata("test")
 SyncRequestModel = create_dynamic_syncrequests("test")
-
+DaemonStatusModel = create_dynamic_daemonstatus("test")
 
 Base.metadata.create_all(bind=engine)
 
@@ -38,9 +38,9 @@ def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = De
     append_SR = SRP(db, syncrequest)
     return append_SR.append_syncrequest()
 
-#@app.post("/daemon/", response_model=schemas.DaemonStatus)
-#def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
-#    return crud.create_daemonstatus(db, daemonstatus)
+@app.post("/daemon/status", response_model=schemas.DaemonStatus)
+def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
+    return crud.create_daemonstatus(db, daemonstatus)
 
 """
 

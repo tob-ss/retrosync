@@ -37,3 +37,16 @@ class SyncRequests(SyncRequestsBase):
 
     class Config: 
         orm_mode = True
+
+class DaemonStatusBase(BaseModel):
+    DeviceID: str
+    LastOnline: Decimal
+
+class DaemonStatusCreate(DaemonStatusBase):
+    pass 
+
+class DaemonStatus(DaemonStatusBase):
+    DeviceID: str
+
+    class Config: 
+        orm_mode = True

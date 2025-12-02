@@ -26,3 +26,11 @@ def create_syncrequest(db: Session, syncrequest: schemas.SyncRequestsCreate):
     db.commit()
     db.refresh(db_syncrequest)
     return db_syncrequest
+
+def create_daemonstatus(db: Session, daemonstatus: schemas.DaemonStatusCreate):
+    from main import DaemonStatusModel
+    db_daemonstatus = DaemonStatusModel(DeviceID=daemonstatus.DeviceID, LastOnline=daemonstatus.LastOnline)
+    db.add(db_daemonstatus)
+    db.commit()
+    db.refresh(db_daemonstatus)
+    return db_daemonstatus
