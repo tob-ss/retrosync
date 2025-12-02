@@ -115,7 +115,6 @@ class DaemonStatusChecker:
         LastOnline1 = self.get_daemon_status()
         while x <= 24:
             x += 1
-            
             time.sleep(5)
             LastOnline2 = self.get_daemon_status()
             if LastOnline1 == LastOnline2:
