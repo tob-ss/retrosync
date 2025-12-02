@@ -62,15 +62,16 @@ while True:
 
     old_list_modified_date = new_list_modified_date
 
-    x = 1
+    x = 0
 
     if trigger_metadata == 1:
         metadata.dolphin_metadata()
         DeviceID_local = {}
         DeviceID_local.update({"DeviceID": "Test Device"})
         print(DeviceID_local)
-        flush_localmetata = requests.post(flush_local, "Test Device")
-        print(flush_localmetata)
+        if x == 1:
+            flush_localmetata = requests.post(flush_local, params=DeviceID_local)
+            print(flush_localmetata)
         for n in metadata.dolphin_metadata():
             if x == 0:
                 n.update({"LID": "CL"})
