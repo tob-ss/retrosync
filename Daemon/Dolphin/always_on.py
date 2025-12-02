@@ -26,6 +26,7 @@ old_list_modified_date = []
 add_metadata = "http://37.27.217.84/metadata/append/"
 flush_local = "http://37.27.217.84/metadata/delete/localflush/"
 daemonstatus_url = "http://37.27.217.84//daemon/status/"
+syncstatus_url = "http://37.27.217.84//sync/status/"
 
 daemonstatus_dict = {"DeviceID": "Test Device"}
 
@@ -99,16 +100,21 @@ while True:
             pass
         pass
 
-    daemonstatus_dict = {"DeviceID": "Test Device"}
+    daemon_ID = {"DeviceID": "Test Device"}
 
     current_time = time.time()
 
-    daemonstatus_dict.update({"LastOnline": current_time})
+    daemon_ID.update({"LastOnline": current_time})
 
-    print(daemonstatus_dict)
+    #print(daemonstatus_dict)
 
-    requests.post(daemonstatus_url, json = daemonstatus_dict)
+    requests.post(daemonstatus_url, json = daemon_ID)
 
+    daemon_ID.pop({"LastOnline": current_time})
+
+    sync_request = requests.get(syncstatus_url, params = daemon_ID)
+
+    print(sync_request)
    
 
     

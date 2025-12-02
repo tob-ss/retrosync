@@ -127,3 +127,21 @@ class DaemonStatusChecker:
                 return 1
         print(f"Last Online 1 was {LastOnline1} and Last Online 2 was {LastOnline2}")
         return 0
+    
+
+class SyncCompletionChecker:
+    def __init__(self, db: Session, DeviceID: str):
+        self.db = db
+        self.DeviceID = DeviceID
+
+    def completion_checker(self):
+        from main import SyncRequestModel
+        Device_table = self.db.query(SyncRequestModel).filter(SyncRequestModel.DeviceID == self.DeviceID).all()
+        for x in Device_table:
+            if x.Completed == False:
+                if x.GameID == "ALL":
+                    return 1
+                else:
+                    return {"GameID": x.GameID, "Operation": x.Operation}
+            if x.Completed == True:
+                pass

@@ -7,7 +7,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC, SyncCompletionChecker as SCC
 
 app = FastAPI()
 
@@ -37,6 +37,11 @@ def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
     append_SR = SRP(db, syncrequest)
     return append_SR.append_syncrequest()
+
+@app.get("/sync/status/")
+def get_sync_completion(DeviceID: str, db: Session = Depends((get_db))):
+    get_completion = SCC(db, DeviceID)
+    return get_completion.completion_checker()
 
 @app.post("/daemon/status/", response_model=schemas.DaemonStatus)
 def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):

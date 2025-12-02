@@ -14,10 +14,9 @@ class DaemonStatusChecker:
     
     def continue_or_cancel(self):
         response = self.check_status()
-        print(response)
-        if response == 1:
+        if response == "1":
             return 1
-        if response == 0:
+        if response == "0":
             return 0
 
 @click.group()
@@ -40,6 +39,7 @@ def upload(device, game, all):
             click.echo(f"Checking if device {device} is online...")
             status = DaemonStatusChecker(device)
             if status.continue_or_cancel() == 1:
+                click.echo(f"{device} is online... Starting Upload!")
                 click.echo("Upload Started!")
                 n = {"DeviceID": device, "Operation": "Upload", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
                 print(n)
@@ -72,13 +72,27 @@ def download(device, game, all):
         raise click.BadParameter((click.style("To download all game saves, please omit the --game or -g flag.", fg='red')))
     if all == False:
         if click.confirm(f"Please confirm that you would like to download {game} game save to the following device: {device}"):
-            click.echo("Download Started!")
-            n = {"DeviceID": device, "Operation": "Download", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
-            print(n)
-            post_request = requests.post(sync_url, json = n)
+            click.echo(f"Checking if device {device} is online...")
+            status = DaemonStatusChecker(device)
+            if status.continue_or_cancel() == 1:
+                click.echo(f"{device} is online... Starting Download!")
+                click.echo("Download Started!")
+                n = {"DeviceID": device, "Operation": "Download", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
+                print(n)
+                sync_request = requests.post(sync_url, json = n)
+            else:
+                click.echo(f"Could not connect to {device}... Please check if Retrosync is running or if device is connected to the internet")
+                click.echo(f"Cancelling Upload...")
     else:
         if click.confirm(f"Please confirm that you would like to download all game saves to the following device: {device}"):
-            click.echo("Download Started!")
-            n = {"DeviceID": device, "Operation": "Download", "GameID": "ALL", "Completed": False, "TimeStamp": int(time.time())}
-            print(n)
-            post_request = requests.post(sync_url, json = n)
+            click.echo(f"Checking if device {device} is online...")
+            status = DaemonStatusChecker(device)
+            if status.continue_or_cancel() == 1:
+                click.echo(f"{device} is online... Starting Download!")
+                click.echo("Download Started!")
+                n = {"DeviceID": device, "Operation": "Download", "GameID": "ALL", "Completed": False, "TimeStamp": int(time.time())}
+                print(n)
+                sync_request = requests.post(sync_url, json = n)
+            else:
+                click.echo(f"Could not connect to {device}... Please check if Retrosync is running or if device is connected to the internet")
+                click.echo(f"Cancelling Download...")
