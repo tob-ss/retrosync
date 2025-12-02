@@ -106,8 +106,9 @@ class DaemonStatusChecker:
 
     def get_daemon_status(self):
         from main import DaemonStatusModel
-        db_daemonstatus = self.db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == self.DeviceID).first()
         self.db.refresh(db_daemonstatus)
+        db_daemonstatus = self.db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == self.DeviceID).first()
+        
         LastOnline = db_daemonstatus.LastOnline
         return LastOnline
     
