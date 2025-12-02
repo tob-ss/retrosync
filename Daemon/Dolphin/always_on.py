@@ -27,7 +27,13 @@ add_metadata = "http://37.27.217.84/metadata/append/"
 flush_local = "http://37.27.217.84/metadata/delete/localflush/"
 daemonstatus_url = "http://37.27.217.84//daemon/status/"
 
+daemonstatus_dict = {"DeviceID": "Test Device"}
 
+current_time = time.time()
+
+daemonstatus_dict.update({"LastOnline": current_time})
+
+requests.post(daemonstatus_url, json = daemonstatus_dict)
 
 while True:
 
