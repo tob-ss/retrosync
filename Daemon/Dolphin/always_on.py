@@ -39,7 +39,7 @@ requests.post(daemonstatus_url, json = daemonstatus_dict)
 while True:
 
     start_time = time.time()
-    delay = 30
+    delay = 15
 
     while time.time() - start_time < delay:
         trigger_metadata = 0
@@ -110,11 +110,11 @@ while True:
 
     requests.post(daemonstatus_url, json = daemon_ID)
 
-    daemon_ID.pop({"LastOnline": current_time})
+    daemon_ID.pop("LastOnline")
 
     sync_request = requests.get(syncstatus_url, params = daemon_ID)
 
-    print(sync_request)
+    print(sync_request.text)
    
 
     

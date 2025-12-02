@@ -50,3 +50,4 @@ class DaemonStatus(DaemonStatusBase):
 
     class Config: 
         orm_mode = True
+

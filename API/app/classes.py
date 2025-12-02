@@ -140,7 +140,7 @@ class SyncCompletionChecker:
         for x in Device_table:
             if x.Completed == False:
                 if x.GameID == "ALL":
-                    return 1
+                    return {"GameID": "ALL", "Operation": x.Operation}
                 else:
                     return {"GameID": x.GameID, "Operation": x.Operation}
             if x.Completed == True:
