@@ -13,21 +13,37 @@ def cli():
 @click.option('--all', '-a', is_flag=True, help='Upload all game saves on device.')
 def upload(device, game, all):
     """Choose which game saves you would like to upload!"""
-    url = "http://37.27.217.84//sync/append/"
+    sync_url = "http://37.27.217.84//sync/append/"
+    get_url = "http://37.27.217.84//daemon/status/"
     if all and game:
         raise click.BadParameter((click.style("To upload all game saves, please omit the --game or -g flag.", fg='red')))
     if all == False:
         if click.confirm(f"Please confirm that you would like to upload {game} game save from the following device: {device}"):
+            click.echo(f"Checking if device {device} is online...")
+            x = {"DeviceID": device}
+            try:
+                get_status = requests.get(get_url, params=x, timeout=(3,10))
+                print(get_status)
+            except requests.Timeout:
+                print("The request timed out")
+
             click.echo("Upload Started!")
             n = {"DeviceID": device, "Operation": "Upload", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
             print(n)
-            post_request = requests.post(url, json = n)
+            sync_request = requests.post(sync_url, json = n)
     else:
         if click.confirm(f"Please confirm that you would like to upload all game saves from the following device: {device}"):
+            click.echo(f"Checking if device {device} is online...")
+            x = {"DeviceID": device}
+            #try:
+            get_status = requests.get(get_url, params=x)
+            click.echo(get_status.text)
+            #except requests.Timeout:
+            #    print("The request timed out")
             click.echo("Upload Started!")
             n = {"DeviceID": device, "Operation": "Upload", "GameID": "ALL", "Completed": False, "TimeStamp": int(time.time())}
             print(n)
-            post_request = requests.post(url, json = n)
+            sync_request = requests.post(sync_url, json = n)
 
 @cli.command()
 @click.option('--device','-d', help='Name of the device you want to download saves to.')
@@ -35,7 +51,7 @@ def upload(device, game, all):
 @click.option('--all', '-a', is_flag=True, help='Download all game saves to device.')
 def download(device, game, all):
     """Choose which game saves you would like to download!"""
-    url = "http://37.27.217.84//sync/append/"
+    sync_url = "http://37.27.217.84//sync/append/"
     if all and game:
         raise click.BadParameter((click.style("To download all game saves, please omit the --game or -g flag.", fg='red')))
     if all == False:
@@ -43,10 +59,10 @@ def download(device, game, all):
             click.echo("Download Started!")
             n = {"DeviceID": device, "Operation": "Download", "GameID": game, "Completed": False, "TimeStamp": int(time.time())}
             print(n)
-            post_request = requests.post(url, json = n)
+            post_request = requests.post(sync_url, json = n)
     else:
         if click.confirm(f"Please confirm that you would like to download all game saves to the following device: {device}"):
             click.echo("Download Started!")
             n = {"DeviceID": device, "Operation": "Download", "GameID": "ALL", "Completed": False, "TimeStamp": int(time.time())}
             print(n)
-            post_request = requests.post(url, json = n)
+            post_request = requests.post(sync_url, json = n)
