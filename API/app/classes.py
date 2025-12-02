@@ -113,7 +113,7 @@ class DaemonStatusChecker:
     def online_calculator(self):
         LastOnline = self.get_daemon_status()
         current_time = time.time()
-        if current_time - LastOnline > 120:
+        if Decimal(current_time) - LastOnline > 120:
             return "Device is Offline"
         else:
             return "Device is Online"
