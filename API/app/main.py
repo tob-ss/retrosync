@@ -43,8 +43,8 @@ def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = 
     return crud.create_daemonstatus(db, daemonstatus)
 
 @app.get("/daemon/status/")
-def get_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends((get_db))):
-    get_status = DSC(db, daemonstatus)
+def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
+    get_status = DSC(db, DeviceID)
     return get_status.online_calculator()
                      
 
