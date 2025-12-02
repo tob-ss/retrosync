@@ -29,6 +29,9 @@ def create_syncrequest(db: Session, syncrequest: schemas.SyncRequestsCreate):
 
 def create_daemonstatus(db: Session, daemonstatus: schemas.DaemonStatusCreate):
     from main import DaemonStatusModel
+    check_row = db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == daemonstatus.DeviceID)
+    if check_row:
+        db.delete(check_row)
     db_daemonstatus = DaemonStatusModel(DeviceID=daemonstatus.DeviceID, LastOnline=daemonstatus.LastOnline)
     db.add(db_daemonstatus)
     db.commit()

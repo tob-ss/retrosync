@@ -38,7 +38,7 @@ def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = De
     append_SR = SRP(db, syncrequest)
     return append_SR.append_syncrequest()
 
-@app.post("/daemon/status", response_model=schemas.DaemonStatus)
+@app.post("/daemon/status/", response_model=schemas.DaemonStatus)
 def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
     return crud.create_daemonstatus(db, daemonstatus)
 
