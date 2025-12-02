@@ -7,7 +7,7 @@ from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
 from sqlalchemy.orm import Session
-from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC
 
 app = FastAPI()
 
@@ -41,6 +41,12 @@ def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = De
 @app.post("/daemon/status/", response_model=schemas.DaemonStatus)
 def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
     return crud.create_daemonstatus(db, daemonstatus)
+
+@app.get("/daemon/status/")
+def get_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends((get_db))):
+    get_status = DSC(db, daemonstatus)
+    return get_status.online_calculator()
+                     
 
 """
 

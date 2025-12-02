@@ -5,6 +5,7 @@ from models import create_dynamic_metadata, create_dynamic_syncrequests
 import models, schemas, crud
 from sqlalchemy.orm import Session
 from decimal import Decimal, getcontext
+import time
 
 class LocalMetadataProcessor:
     def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
@@ -96,3 +97,23 @@ class DupeCloudMDRemover:
         #return LID_table
     #def delete_dupe_games(self):
     #    print(self.get_gamesby_LID())
+
+
+class DaemonStatusChecker:
+    def __init__(self, db: Session, DeviceID: str):
+        self.DeviceID = DeviceID
+        self.db = db
+
+    def get_daemon_status(self):
+        from main import DaemonStatusModel
+        db_daemonstatus = self.db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == self.DeviceID).first()
+        LastOnline = db_daemonstatus.LastOnline
+        return LastOnline
+    
+    def online_calculator(self):
+        LastOnline = self.get_daemon_status()
+        current_time = time.time()
+        if current_time - LastOnline > 120:
+            return "Device is Offline"
+        else:
+            return "Device is Online"

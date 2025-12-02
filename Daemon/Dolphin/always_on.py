@@ -27,7 +27,71 @@ add_metadata = "http://37.27.217.84/metadata/append/"
 flush_local = "http://37.27.217.84/metadata/delete/localflush/"
 daemonstatus_url = "http://37.27.217.84//daemon/status/"
 
+
+
 while True:
+
+    start_time = time.time()
+    delay = 60
+
+    while time.time() - start_time < delay:
+        trigger_metadata = 0
+
+        #new_list_file_number_check = []
+
+        #get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
+
+        #get_total_files.get_total_files()
+
+        #if len(new_list_file_number_check) != len(old_list_file_number_check):
+            #print("triggering metadata.py")
+            #trigger_metadata = 1
+        #else:
+            #print("they are the same, moving on")
+            #pass
+
+        #old_list_file_number_check = new_list_file_number_check
+
+        new_list_modified_date = []
+
+        get_modified_dates = classes.always_on_functions(modified_date_list=new_list_modified_date)
+
+        get_modified_dates.get_modified_dates()
+
+        #print(sum(new_list_modified_date))
+
+        if sum(new_list_modified_date) != sum(old_list_modified_date):
+            #print("triggering metadata.py")
+            trigger_metadata = 1
+        else:
+            #print("they are the same, moving on")
+            pass
+
+        old_list_modified_date = new_list_modified_date
+
+        x = 0
+
+        if trigger_metadata == 1:
+            metadata.dolphin_metadata()
+            DeviceID_local = {}
+            DeviceID_local.update({"DeviceID": "Test Device"})
+            print(DeviceID_local)
+            if x == 1:
+                flush_localmetata = requests.post(flush_local, params=DeviceID_local)
+                print(flush_localmetata)
+            for n in metadata.dolphin_metadata():
+                if x == 0:
+                    n.update({"LID": "CL"})
+                    n.update({"Cloud": "Yes"})
+                else:
+                    n.update({"LID": "L"})
+                    n.update({"Cloud": "No"})
+                n.update({"DeviceID": "Test Device"})
+                post_request = requests.post(add_metadata, json = n)
+                print(post_request.text)
+        else:
+            pass
+        pass
 
     daemonstatus_dict = {"DeviceID": "Test Device"}
 
@@ -39,62 +103,7 @@ while True:
 
     requests.post(daemonstatus_url, json = daemonstatus_dict)
 
-    trigger_metadata = 0
-
-    #new_list_file_number_check = []
-
-    #get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
-
-    #get_total_files.get_total_files()
-
-    #if len(new_list_file_number_check) != len(old_list_file_number_check):
-        #print("triggering metadata.py")
-        #trigger_metadata = 1
-    #else:
-        #print("they are the same, moving on")
-        #pass
-
-    #old_list_file_number_check = new_list_file_number_check
-
-    new_list_modified_date = []
-
-    get_modified_dates = classes.always_on_functions(modified_date_list=new_list_modified_date)
-
-    get_modified_dates.get_modified_dates()
-
-    #print(sum(new_list_modified_date))
-
-    if sum(new_list_modified_date) != sum(old_list_modified_date):
-        #print("triggering metadata.py")
-        trigger_metadata = 1
-    else:
-        #print("they are the same, moving on")
-        pass
-
-    old_list_modified_date = new_list_modified_date
-
-    x = 0
-
-    if trigger_metadata == 1:
-        metadata.dolphin_metadata()
-        DeviceID_local = {}
-        DeviceID_local.update({"DeviceID": "Test Device"})
-        print(DeviceID_local)
-        if x == 1:
-            flush_localmetata = requests.post(flush_local, params=DeviceID_local)
-            print(flush_localmetata)
-        for n in metadata.dolphin_metadata():
-            if x == 0:
-                n.update({"LID": "CL"})
-                n.update({"Cloud": "Yes"})
-            else:
-                n.update({"LID": "L"})
-                n.update({"Cloud": "No"})
-            n.update({"DeviceID": "Test Device"})
-            post_request = requests.post(add_metadata, json = n)
-            print(post_request.text)
-    else:
-        pass
+   
 
     
 
