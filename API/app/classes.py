@@ -124,6 +124,6 @@ class DaemonStatusChecker:
             if LastOnline1 == LastOnline2:
                 pass
             else:
-                return f"{self.DeviceID} is Online"
+                return 1
         print(f"Last Online 1 was {LastOnline1} and Last Online 2 was {LastOnline2}")
-        return f"{self.DeviceID} is Offline"
+        return 0

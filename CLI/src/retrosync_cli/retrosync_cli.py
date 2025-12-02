@@ -15,9 +15,9 @@ class DaemonStatusChecker:
     def continue_or_cancel(self):
         response = self.check_status()
         print(response)
-        if response == f"{self.DeviceID} is Online":
+        if response == 1:
             return 1
-        if response == f"{self.DeviceID} is Offline":
+        if response == 0:
             return 0
 
 @click.group()
