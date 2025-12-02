@@ -39,11 +39,11 @@ def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = De
     return append_SR.append_syncrequest()
 
 @app.post("/daemon/status/", response_model=schemas.DaemonStatus)
-def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
+async def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
     return crud.create_daemonstatus(db, daemonstatus)
 
 @app.get("/daemon/status/")
-def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
+async def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
     get_status = DSC(db, DeviceID)
     return get_status.online_calculator()
                      
