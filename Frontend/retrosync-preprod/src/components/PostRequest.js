@@ -67,7 +67,7 @@ const SubmitSync = () => {
               rows="1"
               placeholder="Game ID"
               value={gameID}
-              onChange={(event) => setOperation(event.target.value)}
+              onChange={(event) => setGameID(event.target.value)}
               />
               <textarea
               type="text"
@@ -75,7 +75,7 @@ const SubmitSync = () => {
               rows="1"
               placeholder="Completed"
               value={completed}
-              onChange={(event) => setOperation(event.target.value)}
+              onChange={(event) => setCompleted(event.target.value)}
               />
               <button >
                 Submit
