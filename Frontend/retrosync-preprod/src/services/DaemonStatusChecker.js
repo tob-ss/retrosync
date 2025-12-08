@@ -1,7 +1,7 @@
 async function getDaemonStatus(deviceID) {
     try {
         const params = new URLSearchParams();
-        params.append("DeviceID", DeviceID)
+        params.append("DeviceID", deviceID)
         let daemonStatus = await new Promise(
             fetch(`http://37.27.217.84/daemon/status?${params}`)
         );
