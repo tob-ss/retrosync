@@ -35,8 +35,11 @@ def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
 
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
-    append_SR = SRP(db, syncrequest)
-    return append_SR.append_syncrequest()
+    try:
+        append_SR = SRP(db, syncrequest)
+        return append_SR.append_syncrequest()
+    except Exception:
+        raise HTTPException(status_code=405, detail=f"No idea wtf happened ngl, heres the body of the request {syncrequest}")
 
 @app.get("/sync/status/")
 def get_sync_completion(DeviceID: str, db: Session = Depends((get_db))):
