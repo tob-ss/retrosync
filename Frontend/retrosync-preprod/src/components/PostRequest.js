@@ -4,7 +4,6 @@ const SubmitSync = () => {
   const [deviceID, setDeviceID] = useState("");
   const [operation, setOperation] = useState("");
   const [gameID, setGameID] = useState("");
-  const [completed, setCompleted] = useState("");
 
 
   const handleSubmit = (event) => {
@@ -13,7 +12,7 @@ const SubmitSync = () => {
       DeviceID: deviceID,
       Operation: operation,
       GameID: gameID,
-      Completed: completed,
+      Completed: false,
       TimeStamp: Date.now(),
     };
     fetch("http://37.27.217.84/sync/append/", {
@@ -28,7 +27,6 @@ const SubmitSync = () => {
         setDeviceID("");
         setOperation("");
         setGameID("");
-        setCompleted("");
       })
       .catch((error) => {
         console.log(error)
@@ -68,14 +66,6 @@ const SubmitSync = () => {
               placeholder="Game ID"
               value={gameID}
               onChange={(event) => setGameID(event.target.value)}
-              />
-              <textarea
-              type="text"
-              name="Completed"
-              rows="1"
-              placeholder="Completed"
-              value={completed}
-              onChange={(event) => setCompleted(event.target.value)}
               />
               <button >
                 Submit
