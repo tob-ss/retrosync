@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import MyApp from './components/test_app.js';
+import SubmitSync from './components/PostRequest.js';
 
 export default function App() {
   return (
-    <MyApp />
+    <SubmitSync />
   );
 }
