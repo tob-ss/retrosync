@@ -1,0 +1,16 @@
+[project]
+name = "retrosync_cli"
+version = "1.0.0"
+description = "Retrosync's CLI"
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.1",
+    "requests==2.32.5",
+]
+
+[project.scripts]
+retrosync = "retrosync_cli.retrosync_cli:cli"
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"

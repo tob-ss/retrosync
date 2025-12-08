@@ -1,4 +1,6 @@
 import os
+import boto3
+from dotenv import load_dotenv
 
 class save_locations:
     def __init__(self, dolphin_games, save_path="/mnt/c/Users/tobao/AppData/Roaming/Dolphin Emulator/Wii/title"):
@@ -132,5 +134,45 @@ class wiitdb_processor:
 
             for row in csv_reader:
                 self.game_list_raw.append(row)
-        
+
+class sync_handler:
+    def __init__(self, syncrequest_data, save_path, bucket):
+        self.syncrequest_data = syncrequest_data
+        self.save_path = save_path
+        self.bucket = bucket
+
+    def upload_file_to_b2(file_name, bucket, object_name=None):
+        if object_name is None:
+            object_name = file_name
+
+        load_dotenv()
+
+        KEY_ID = os.getenv("aws_access_key_id")
+        ACCESS_KEY = os.getenv("aws_secret_access_key")
+
+        b2_client = boto3.client('s3')
+
+
+        try:
+            response = b2_client.upload_file(file_name, bucket, object_name)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return False
+        return True
+
+    def upload_folder_to_b2(self):
+        for root, dirs, files in os.walk(self.save_path):
+            for file in files:
+                local_path = os.path.join(root, file)
+                relative_path = os.path.relpath(local_path, self.save_path)
+                b2_object_name = relative_path.replace("\\", "/")
+
+                print(f"Uploading {local_path} to {self.bucket}/{b2_object_name}")
+                success = self.upload_file_to_b2(local_path, self.bucket, b2_object_name)
+
+                if success:
+                    print(f"Upload successful: {local_path} has been uploaded to {self.bucket}.")
+                else:
+                    print("Upload failed")
+                
 # unfinished, will need to 

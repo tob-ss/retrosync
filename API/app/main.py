@@ -1,20 +1,57 @@
 from typing import Union
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from database import engine, Base, get_db
-from models import create_dynamic_localmetadata
+from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
 from sqlalchemy.orm import Session
+from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC, SyncCompletionChecker as SCC
 
 app = FastAPI()
 
-LocalMetadataModel = create_dynamic_localmetadata("test")
+MetadataModel = create_dynamic_metadata("test")
+SyncRequestModel = create_dynamic_syncrequests("test")
+DaemonStatusModel = create_dynamic_daemonstatus("test")
 
 Base.metadata.create_all(bind=engine)
 
-@app.post("/metadata/", response_model=schemas.LocalMetadata)
-def create_localmetadata(localmetadata: schemas.LocalMetadataCreate, db: Session = Depends(get_db)):
-    #print(f"Got: {localmetadata.LastModified}")
-    return crud.create_localmetadata(db, localmetadata)
+@app.post("/metadata/append/", response_model=schemas.Metadata)
+def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_db)):
+    Base.metadata.create_all(bind=engine)
+    Create_Table = MetadataModel()
+    append_LMD = LMP(db, metadata)
+    return append_LMD.append_metadata()
+
+@app.post("/metadata/delete/localflush/", response_model=schemas.Metadata_Device)
+def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
+    try:
+        print(DeviceID)
+        flush_LMD = LMF(db, DeviceID)
+        return flush_LMD.flush_metadata()
+    except Exception:
+        raise HTTPException(status_code=406, detail="New Error Found")
+
+@app.post("/sync/append/", response_model=schemas.SyncRequests)
+def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
+    append_SR = SRP(db, syncrequest)
+    return append_SR.append_syncrequest()
+
+@app.get("/sync/status/")
+def get_sync_completion(DeviceID: str, db: Session = Depends((get_db))):
+    get_completion = SCC(db, DeviceID)
+    return get_completion.completion_checker()
+
+@app.post("/daemon/status/", response_model=schemas.DaemonStatus)
+def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = Depends(get_db)):
+    return crud.create_daemonstatus(db, daemonstatus)
+
+@app.get("/daemon/status/")
+def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
+    get_status = DSC(db, DeviceID)
+    return get_status.online_calculator()
+                     
 
 """
 

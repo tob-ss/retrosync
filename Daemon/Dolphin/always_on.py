@@ -4,6 +4,7 @@ import classes as classes
 import metadata
 import requests
 
+
 #def detect_file_changes(file_path, interval=1):
 #    last_modified = os.path.getmtime(file_path)
 #    while True:
@@ -23,52 +24,105 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-url = "http://37.27.217.84/metadata/"
+add_metadata = "http://37.27.217.84/metadata/append/"
+flush_local = "http://37.27.217.84/metadata/delete/localflush/"
+daemonstatus_url = "http://37.27.217.84//daemon/status/"
+syncstatus_url = "http://37.27.217.84//sync/status/"
+
+daemonstatus_dict = {"DeviceID": "Test Device"}
+
+current_time = time.time()
+
+daemonstatus_dict.update({"LastOnline": current_time})
+
+requests.post(daemonstatus_url, json = daemonstatus_dict)
 
 while True:
 
-    trigger_metadata = 0
+    start_time = time.time()
+    delay = 15
 
-    #new_list_file_number_check = []
+    while time.time() - start_time < delay:
+        trigger_metadata = 0
 
-    #get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
+        #new_list_file_number_check = []
 
-    #get_total_files.get_total_files()
+        #get_total_files = classes.always_on_functions(file_number_list=new_list_file_number_check)
 
-    #if len(new_list_file_number_check) != len(old_list_file_number_check):
-        #print("triggering metadata.py")
-        #trigger_metadata = 1
-    #else:
-        #print("they are the same, moving on")
-        #pass
+        #get_total_files.get_total_files()
 
-    #old_list_file_number_check = new_list_file_number_check
+        #if len(new_list_file_number_check) != len(old_list_file_number_check):
+            #print("triggering metadata.py")
+            #trigger_metadata = 1
+        #else:
+            #print("they are the same, moving on")
+            #pass
 
-    new_list_modified_date = []
+        #old_list_file_number_check = new_list_file_number_check
 
-    get_modified_dates = classes.always_on_functions(modified_date_list=new_list_modified_date)
+        new_list_modified_date = []
 
-    get_modified_dates.get_modified_dates()
+        get_modified_dates = classes.always_on_functions(modified_date_list=new_list_modified_date)
 
-    #print(sum(new_list_modified_date))
+        get_modified_dates.get_modified_dates() 
 
-    if sum(new_list_modified_date) != sum(old_list_modified_date):
-        #print("triggering metadata.py")
-        trigger_metadata = 1
-    else:
-        #print("they are the same, moving on")
+        #print(sum(new_list_modified_date))
+
+        if sum(new_list_modified_date) != sum(old_list_modified_date):
+            #print("triggering metadata.py")
+            trigger_metadata = 1
+        else:
+            #print("they are the same, moving on")
+            pass
+
+        old_list_modified_date = new_list_modified_date
+
+        x = 0
+
+        if trigger_metadata == 1:
+            metadata.dolphin_metadata()
+            DeviceID_local = {}
+            DeviceID_local.update({"DeviceID": "Test Device"})
+            print(DeviceID_local)
+            if x == 1:
+                flush_localmetata = requests.post(flush_local, params=DeviceID_local)
+                print(flush_localmetata)
+            for n in metadata.dolphin_metadata():
+                if x == 0:
+                    n.update({"LID": "CL"})
+                    n.update({"Cloud": "Yes"})
+                else:
+                    n.update({"LID": "L"})
+                    n.update({"Cloud": "No"})
+                n.update({"DeviceID": "Test Device"})
+                post_request = requests.post(add_metadata, json = n)
+                print(post_request.text)
+        else:
+            pass
         pass
 
-    old_list_modified_date = new_list_modified_date
+    daemon_ID = {"DeviceID": "Test Device"}
 
-    if trigger_metadata == 1:
-        metadata.dolphin_metadata()
-        for n in metadata.dolphin_metadata():
-            n.update({"DeviceID": "Test Device"})
-            post_request = requests.post(url, json = n)
-            print(post_request.text)
-    else:
-        pass
+    current_time = time.time()
+
+    daemon_ID.update({"LastOnline": current_time})
+
+    #print(daemonstatus_dict)
+
+    requests.post(daemonstatus_url, json = daemon_ID)
+
+    daemon_ID.pop("LastOnline")
+
+    sync_request = requests.get(syncstatus_url, params = daemon_ID)
+
+    request_data = dict(sync_request.text)
+
+    if request_data != "null":
+        if request_data["GameID"] == "ALL":
+            upload_saves = classes.sync_handler()
+
+
+   
 
     
 
