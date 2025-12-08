@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import checkStatus  from '../services/DaemonStatusChecker';
 
 const SubmitSync = () => {
   const [deviceID, setDeviceID] = useState("");
@@ -15,6 +16,7 @@ const SubmitSync = () => {
       Completed: false,
       TimeStamp: Date.now() / 1000,
     };
+    const status = checkStatus(deviceID)
     fetch("http://37.27.217.84/sync/append/", {
       method: "POST",
       headers: {
