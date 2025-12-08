@@ -4,6 +4,7 @@ import classes as classes
 import metadata
 import requests
 
+
 #def detect_file_changes(file_path, interval=1):
 #    last_modified = os.path.getmtime(file_path)
 #    while True:
@@ -63,7 +64,7 @@ while True:
 
         get_modified_dates = classes.always_on_functions(modified_date_list=new_list_modified_date)
 
-        get_modified_dates.get_modified_dates()
+        get_modified_dates.get_modified_dates() 
 
         #print(sum(new_list_modified_date))
 
@@ -114,7 +115,13 @@ while True:
 
     sync_request = requests.get(syncstatus_url, params = daemon_ID)
 
-    print(sync_request.text)
+    request_data = dict(sync_request.text)
+
+    if request_data != "null":
+        if request_data["GameID"] == "ALL":
+            upload_saves = classes.sync_handler()
+
+
    
 
     
