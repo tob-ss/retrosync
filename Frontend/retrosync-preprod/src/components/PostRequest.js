@@ -16,10 +16,10 @@ const SubmitSync = () => {
       Completed: completed,
       TimeStamp: Date.now(),
     };
-    fetch("http://37.27.217.84/sync/append/", {
+    fetch("http://37.27.217.84/sync/append", {
       method: "POST",
       headers: {
-        "Content-Type": "Application/JSON",
+        "Content-type": "application/json",
       },
       body: JSON.stringify(syncRequest),
     })
