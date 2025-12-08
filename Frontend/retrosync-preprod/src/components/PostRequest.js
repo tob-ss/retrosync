@@ -13,7 +13,7 @@ const SubmitSync = () => {
       Operation: operation,
       GameID: gameID,
       Completed: false,
-      TimeStamp: Date.now(),
+      TimeStamp: Date.now() / 1000,
     };
     fetch("http://37.27.217.84/sync/append/", {
       method: "POST",
