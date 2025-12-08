@@ -2,10 +2,9 @@ async function getDaemonStatus(deviceID) {
     try {
         const params = new URLSearchParams();
         params.append("DeviceID", deviceID)
-        let daemonStatus = await new Promise(
-            fetch(`http://37.27.217.84/daemon/status?${params}`).then(res => res),
-        );
-        console.log(`The Current Status of the Daemon is: ${daemonStatus}`)
+        let daemonStatus = await fetch(`http://37.27.217.84/daemon/status?${params}`);
+        let data = await response.json();
+        console.log(`The Current Status of the Daemon is: ${data}`)
     } catch (error) {
         console.log("Error:", error)
     }
