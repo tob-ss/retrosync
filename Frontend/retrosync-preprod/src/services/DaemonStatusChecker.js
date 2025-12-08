@@ -1,30 +1,14 @@
-import axios from 'axios';
-
-function makeGetRequest(path) {
-    return new Promise(function (resolve, reject) {
-        axios.get(path).then(
-            (response) => {
-                var result = response.data;
-                console.log('Processing Request');
-                resolve(result);
-            },
-            (error) => {
-                reject(error)
-            }
+async function getDaemonStatus(deviceID) {
+    try {
+        const params = new URLSearchParams();
+        params.append("DeviceID", DeviceID)
+        let daemonStatus = await new Promise(
+            fetch(`http://37.27.217.84/daemon/status?${params}`)
         );
-    });
-}
-
-async function checkStatus(DeviceID) {
-    const params = new URLSearchParams();
-    params.append("DeviceID", DeviceID);
-    let result = await makeGetRequest(`http://37.27.217.84/daemon/status?${params}`);
-    if (result === "1") {
-        return 1
-    }
-    else {
-        return 0
+        console.log(`The Current Status of the Daemon is: ${daemonStatus}`)
+    } catch (error) {
+        console.log("Error:", error)
     }
 }
 
-export default checkStatus;
+export default getDaemonStatus;
