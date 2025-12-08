@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
-import checkStatus  from '../services/DaemonStatusChecker';
-import postSyncRequest from '../services/PostSyncRequest';
 import getDaemonStatus from '../services/DaemonStatusChecker';
 
 const SubmitSync = () => {
