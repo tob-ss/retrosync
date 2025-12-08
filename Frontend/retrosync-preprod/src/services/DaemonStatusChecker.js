@@ -1,14 +1,16 @@
+import axios from 'axios';
+
 function makeGetRequest(path) {
     return new Promise(function (resolve, reject) {
-        fetch(path).then(
+        axios.get(path).then(
             (response) => {
                 var result = response.data;
-                console.log('Processing REquest');
+                console.log('Processing Request');
                 resolve(result);
             },
-                (error) => {
-                    reject(error)
-                }
+            (error) => {
+                reject(error)
+            }
         );
     });
 }
