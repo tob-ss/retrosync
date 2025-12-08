@@ -19,7 +19,7 @@ async function checkStatus(DeviceID) {
     const params = new URLSearchParams();
     params.append("DeviceID", DeviceID);
     let result = await makeGetRequest(`http://37.27.217.84/daemon/status?${params}`);
-    if (response === "1") {
+    if (result === "1") {
         return 1
     }
     else {
