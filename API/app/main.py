@@ -1,8 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, Depends, Request, status
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
@@ -10,6 +8,14 @@ from sqlalchemy.orm import Session
 from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC, SyncCompletionChecker as SCC
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 MetadataModel = create_dynamic_metadata("test")
 SyncRequestModel = create_dynamic_syncrequests("test")
