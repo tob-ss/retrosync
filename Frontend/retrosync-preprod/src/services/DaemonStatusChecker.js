@@ -1,22 +1,14 @@
 const checkStatus = (DeviceID) => {
     const get_url = "http://37.27.217.84/daemon/status/"
-    const x = {
-        DeviceID: DeviceID
+    const params = new URLSearchParams();
+    params.append("DeviceID", DeviceID);
+    const response = fetch(`http://37.27.217.84/daemon/status/${params}`);
+    if (response === "1") {
+        return 1
     }
-    fetch(get_url, {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify(x),
-    })
-        .then((response) => response.json())
-        if (response == "1") {
-            return 1
-        }
-        else {
-            return 0
-        }
+    else {
+        return 0
+    }
 }
 
 export default checkStatus;

@@ -17,7 +17,8 @@ const SubmitSync = () => {
       TimeStamp: Date.now() / 1000,
     };
     const status = checkStatus(deviceID)
-    fetch("http://37.27.217.84/sync/append/", {
+    if (status === 1) {
+      fetch("http://37.27.217.84/sync/append/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -33,6 +34,11 @@ const SubmitSync = () => {
       .catch((error) => {
         console.log(error)
       });
+    }
+    else {
+      console.log("Could not connect to device")
+    };
+    
   };
 
   return (
