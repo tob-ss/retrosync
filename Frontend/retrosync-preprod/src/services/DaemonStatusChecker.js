@@ -1,6 +1,6 @@
 function makeGetRequest(path) {
     return new Promise(function (resolve, reject) {
-        fetch(`http://37.27.217.84/daemon/status?${params}`).then(
+        fetch(path).then(
             (response) => {
                 var result = response.data;
                 console.log('Processing REquest');

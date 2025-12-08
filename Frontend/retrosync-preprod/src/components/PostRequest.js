@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import React, { useState } from 'react';
 import checkStatus  from '../services/DaemonStatusChecker';
 
@@ -6,38 +7,43 @@ const SubmitSync = () => {
   const [operation, setOperation] = useState("");
   const [gameID, setGameID] = useState("");
 
+  const buttonRef = useRef(null)
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const syncRequest = {
-      DeviceID: deviceID,
-      Operation: operation,
-      GameID: gameID,
-      Completed: false,
-      TimeStamp: Date.now() / 1000,
-    };
-    const status = checkStatus(deviceID)
-    if (status === 1) {
-      fetch("http://37.27.217.84/sync/append/", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(syncRequest),
-    })
-      .then((response) => response.json())
-      .then((newRequest) => {
-        setDeviceID("");
-        setOperation("");
-        setGameID("");
+    if (buttonRef.current && !buttonRef.current.disabled) {
+      buttonRef.current.disabled = true;
+      event.preventDefault();
+      const syncRequest = {
+        DeviceID: deviceID,
+        Operation: operation,
+        GameID: gameID,
+        Completed: false,
+        TimeStamp: Date.now() / 1000,
+      };
+      const status = checkStatus(deviceID)
+      if (status === 1) {
+        fetch("http://37.27.217.84/sync/append/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(syncRequest),
       })
-      .catch((error) => {
-        console.log(error)
-      });
+        .then((response) => response.json())
+        .then((newRequest) => {
+          setDeviceID("");
+          setOperation("");
+          setGameID("");
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+      }
+      else {
+        console.log("Could not connect to device")
+      };
     }
-    else {
-      console.log("Could not connect to device")
-    };
+    buttonRef.current.disabled = false;
     
   };
 
@@ -75,7 +81,7 @@ const SubmitSync = () => {
               value={gameID}
               onChange={(event) => setGameID(event.target.value)}
               />
-              <button >
+              <button ref={buttonRef}>
                 Submit
               </button>
           </form>
