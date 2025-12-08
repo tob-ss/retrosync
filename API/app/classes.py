@@ -107,6 +107,8 @@ class DaemonStatusChecker:
     def get_daemon_status(self):
         from main import DaemonStatusModel
         db_daemonstatus = self.db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == self.DeviceID).first()
+        if db_daemonstatus == None:
+            return 0
         self.db.commit()
         self.db.refresh(db_daemonstatus)
         LastOnline = db_daemonstatus.LastOnline
@@ -115,7 +117,8 @@ class DaemonStatusChecker:
     def online_calculator(self):
         x = 0
         LastOnline1 = self.get_daemon_status()
-        print(LastOnline1)
+        if LastOnline1 == 0:
+            return 0
         while x <= 24:
             x += 1
             time.sleep(5)
