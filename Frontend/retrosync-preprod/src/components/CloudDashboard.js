@@ -6,6 +6,7 @@ function cloudDashboard() {
         { src: "/US/SMNE01.png",  width: 176, height: 248 },
         { src: "/US/SNCE8P.png",  width: 176, height: 248 },
         { src: "/US/RMCE.png",  width: 176, height: 248 },
+        { src: "/US/RMGE01.png",  width: 176, height: 248 },
     ];
 
    return <RowsPhotoAlbum 
