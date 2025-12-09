@@ -7,7 +7,11 @@ function cloudDashboard() {
         { src: "https://art.gametdb.com/wii/cover3D/US/SMNE01.png?1317736150",  width: 176, height: 248 },
     ];
 
-   return <RowsPhotoAlbum photos={photos} />
+   return <RowsPhotoAlbum 
+            photos={photos}
+            targetRowHeight={250}
+            rowConstraints={{ maxPhotos: 4 }} 
+            />
 
 }
 
