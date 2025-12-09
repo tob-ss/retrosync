@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import cloudDashboard from "./CloudDashboard";
+
 const Tab = styled.button`
   font-size: 20px;
   padding: 10px 60px;
@@ -32,10 +34,12 @@ function TabGroup() {
           >
             {type}
           </Tab>
+          /* remove the paragraph below, and replace with some logic that does two things
+          firstly, checks the active type; if its cloud, should then show the cloud dashboard component,
+          if its local, show the local dashboard component*/
         ))}
       </ButtonGroup>
-      <p />
-      <p> Showing your {active} Games</p>
+      {cloudDashboard()}
     </>
   );
 }
