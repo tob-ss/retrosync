@@ -3,8 +3,9 @@ import "react-photo-album/rows.css";
 
 function cloudDashboard() {
     const photos = [
-        { src: "https://art.gametdb.com/wii/cover3D/EN/RMCP01.png?1528403592",  width: 176, height: 248 },
-        { src: "https://art.gametdb.com/wii/cover3D/US/SMNE01.png?1317736150",  width: 176, height: 248 },
+        { src: "../assets/SMNE01.png",  width: 176, height: 248 },
+        { src: "../assets/SNCE8P.png",  width: 176, height: 248 },
+        { src: "../assets/RMCE.png",  width: 176, height: 248 },
     ];
 
    return <RowsPhotoAlbum 
