@@ -3,9 +3,9 @@ import "react-photo-album/rows.css";
 
 function cloudDashboard() {
     const photos = [
-        { src: "../assets/US/SMNE01.png",  width: 176, height: 248 },
-        { src: "../assets/US/SNCE8P.png",  width: 176, height: 248 },
-        { src: "../assets/US/RMCE.png",  width: 176, height: 248 },
+        { src: "../../public/US/SMNE01.png",  width: 176, height: 248 },
+        { src: "../../public/US/SNCE8P.png",  width: 176, height: 248 },
+        { src: "../../public/US/RMCE.png",  width: 176, height: 248 },
     ];
 
    return <RowsPhotoAlbum 
