@@ -10,7 +10,7 @@ function cloudDashboard() {
    return <RowsPhotoAlbum 
             photos={photos}
             targetRowHeight={250}
-            rowConstraints={{ maxPhotos: 4 }} 
+            rowConstraints={{ maxPhotos: 4, singleRowMaxHeight: 250 }} 
             />
 
 }
