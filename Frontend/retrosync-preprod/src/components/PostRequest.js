@@ -20,27 +20,23 @@ const SubmitSync = () => {
         Completed: false,
         TimeStamp: Date.now() / 1000,
       };
-      if (getDaemonStatus(deviceID)=== 1) {
-        fetch("http://37.27.217.84/sync/append/", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(syncRequest),
+      getDaemonStatus(deviceID) 
+      fetch("http://37.27.217.84/sync/append/", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(syncRequest),
+    })
+      .then((response) => response.json())
+      .then((newRequest) => {
+        setDeviceID("");
+        setOperation("");
+        setGameID("");
       })
-        .then((response) => response.json())
-        .then((newRequest) => {
-          setDeviceID("");
-          setOperation("");
-          setGameID("");
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-      }
-      else {
-        console.log("Could not connect to device")
-      };
+      .catch((error) => {
+        console.log(error)
+      });
     }
     buttonRef.current.disabled = false;
     
