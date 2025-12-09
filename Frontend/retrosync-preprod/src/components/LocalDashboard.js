@@ -1,20 +1,14 @@
-import { Gallery } from "react-grid-gallery";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
 
 function localDashboard() {
-    const image1 = {
-        src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg",
-        width: 320,
-        height: 212,
-        customOverlay: (
-            <div className="custom-overlay__caption">
-            <div>Boats (Jeshu John - designerspics.com)</div>
-            </div>
-        ),
-    }
+    const photos = [
+        { src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg", width: 800, height: 600 },
+        { src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg", width: 1600, height: 900 },
+    ];
 
-    return (
-    <Gallery images={[image1]} />
-    );
+   return <RowsPhotoAlbum photos={photos} />
+
 }
 
 export default localDashboard;
