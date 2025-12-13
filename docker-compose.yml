@@ -13,12 +13,12 @@ services:
       - backend
     volumes:
       - db_data:/var/lib/mysql
-  frontend:
+  frontend: 
     container_name: frontend
     build: ./Frontend/retrosync-preprod
     volumes:
-      - ./Frontend/retrosync-preprod:/app
-      - ./Frontend/retrosync-preprod/node_modules:/app/node_modules
+      - ./Frontend/retrosync-preprod/src:/code/src
+      - /project/node_modules
     ports:
       - "3000:3000"
     networks:

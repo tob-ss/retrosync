@@ -4,11 +4,9 @@ FROM node:alpine AS development
 # Declaring env
 ENV NODE_ENV development
 
-# Setting up the work directory
-WORKDIR /app
-
-# Installing dependencies
-COPY package*.json ./
+WORKDIR /code
+COPY package.json /code/package.json
+COPY package-lock.json /code/package-lock.json
 
 RUN npm install
 
