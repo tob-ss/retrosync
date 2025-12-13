@@ -18,12 +18,15 @@ services:
     build: ./Frontend/retrosync-preprod
     volumes:
       - ./Frontend/retrosync-preprod:/app
+      - ./node_modules:/app/node_modules
     ports:
       - "3000:3000"
     networks:
       - frontend
     environment:
       NODE_ENV: development
+    tty: true
+    command: npm start
   api:
     build: ./API
     container_name: apiserver
