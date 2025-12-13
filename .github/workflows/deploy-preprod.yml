@@ -12,21 +12,29 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Set up SSH key
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        host='37.27.217.84'
-        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+    - name: "Configure SSH"
       env:
-        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-        SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+          SSH_USER: ${{ secrets.SERVER_USER }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SERVER_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+      run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/external-machine.key
+          chmod 600 ~/.ssh/external-machine.key
+          cat >>~/.ssh/config <<END
+          Host external-machine
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/external-machine.key
+            StrictHostKeyChecking no
+          END
     - name: Deploy to server
       run: |
         echo "Starting deployment.."
         echo "SSHing into server"
-        ssh -i $SSH_KEY_PATH ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+        ssh external-machine << EOF
           echo "Moving to retrosync directory"
           cd /retrosync/retrosync
 
