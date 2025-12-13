@@ -18,7 +18,7 @@ services:
     build: ./Frontend/retrosync-preprod
     volumes:
       - ./Frontend/retrosync-preprod:/app
-      - ./Frontend/retrosync-prepro/node_modules:/app/node_modules
+      - ./Frontend/retrosync-preprod/node_modules:/app/node_modules
     ports:
       - "3000:3000"
     networks:
