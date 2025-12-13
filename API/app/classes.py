@@ -13,6 +13,7 @@ class LocalMetadataProcessor:
         self.db = db
 
     def append_metadata(self):
+        print("Testing out making a hash: " + str(hash(self.localmetadata.GameID)))
         if self.localmetadata.LID == "CL":
             delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
             delete_dupes.get_gamesby_LID()
