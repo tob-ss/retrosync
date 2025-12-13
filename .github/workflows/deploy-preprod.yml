@@ -26,7 +26,7 @@ jobs:
       run: |
         echo "Starting deployment.."
         echo "SSHing into server"
-        ssh -i $SSH_KEY_PATH -o ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+        ssh -i $SSH_KEY_PATH ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
           echo "Moving to retrosync directory"
           cd /retrosync/retrosync
 
