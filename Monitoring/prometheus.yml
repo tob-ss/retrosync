@@ -10,16 +10,16 @@ global:
   - job_name: cadvisor
     static_configs:
       - targets: ['cadvisor:8080']
-- job_name: blackbox
-    metrics_path: /probe
-    params:
-      module: [http_2xx]
-    static_configs:
-      - targets:
-          - http://37.27.217.84:3010
-          - http://37.27.217.84:80/metadata/append/
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox-exporter:9115
+  - job_name: blackbox
+      metrics_path: /probe
+      params:
+        module: [http_2xx]
+      static_configs:
+        - targets:
+            - http://37.27.217.84:3010
+            - http://37.27.217.84:80/metadata/append/
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: instance
+        - target_label: __address__
+          replacement: blackbox-exporter:9115
