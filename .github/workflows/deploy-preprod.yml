@@ -19,11 +19,14 @@ jobs:
         host='37.27.217.84'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+      env:
+        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+        SSH_KEY_PATH: ${{ github.workspace }}/../private.key
     - name: Deploy to server
       run: |
         echo "Starting deployment.."
         echo "SSHing into server"
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+        ssh -i $SSH_KEY_PATH -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
           echo "Moving to retrosync directory"
           cd /retrosync/retrosync
 
