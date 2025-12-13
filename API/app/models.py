@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, create_engine, ARRAY, Numeric, Integer, Boolean
+from sqlalchemy import Column, String, create_engine, ARRAY, Numeric, Integer, Boolean, BigInteger
 from sqlalchemy.orm import declarative_base, sessionmaker
 from database import Base
 
@@ -7,7 +7,7 @@ def create_dynamic_metadata(customer_prefix):
         __tablename__ = f"{customer_prefix}_metadata"
         
         ID = Column(Integer, primary_key=True, index=True)
-        Hash = Column(String(255), nullable=False)
+        Hash = Column(BigInteger, nullable=False)
         LID = Column(String(2), nullable=False)
         GameID = Column(String(50), nullable=False)
         GameName = Column(String(255), nullable=False)
