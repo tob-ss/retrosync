@@ -24,7 +24,7 @@ services:
       - ./Frontend/retrosync-preprod/src:/code/src
       - /project/node_modules
     ports:
-      - "8001:8001"
+      - "3000:3000"
     networks:
       - frontend
     environment:
