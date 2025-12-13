@@ -1,25 +1,31 @@
+---
 global:
   scrape_interval: 15s
-  scrape_configs:
+scrape_configs:
   - job_name: prometheus
     static_configs:
-      - targets: ['prometheus:9090']
+      - targets:
+          - prometheus:9090
   - job_name: node_exporter
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets:
+          - node-exporter:9100
   - job_name: cadvisor
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets:
+          - cadvisor:8080
   - job_name: blackbox
     metrics_path: /probe
     params:
-      module: [http_2xx]
+      module:
+        - http_2xx
     static_configs:
       - targets:
           - http://37.27.217.84:3010
           - http://37.27.217.84:80/metadata/append/
     relabel_configs:
-      - source_labels: [__address__]
+      - source_labels:
+          - __address__
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115
