@@ -20,7 +20,7 @@ jobs:
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
     - name: Deploy to server
       run: |
-        echo "Starting deployment..."
+        echo "Starting deployment.."
         echo "SSHing into server"
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
           echo "Moving to retrosync directory"
