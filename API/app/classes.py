@@ -13,7 +13,7 @@ class LocalMetadataProcessor:
         self.db = db
 
     def append_metadata(self):
-        md_hash = int(hash(self.localmetadata.GameID)) + int(hash(self.localmetadata.LastModified)) + int(hash(self.localmetadata.DeviceID))
+        md_hash = str(int(hash(self.localmetadata.GameID)) + int(hash(self.localmetadata.LastModified)) + int(hash(self.localmetadata.DeviceID)))
         print("Testing out making a hash: " + md_hash)
         if self.localmetadata.LID == "CL":
             delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
