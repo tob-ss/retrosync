@@ -26,6 +26,7 @@ services:
     environment:
       NODE_ENV: development
     tty: true
+    command: npm start
   api:
     build: ./API
     container_name: apiserver
