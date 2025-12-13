@@ -15,9 +15,12 @@ class LocalMetadataProcessor:
 
     def hash_generator(self):
         m = hashlib.sha256()
-        m.update(bytes(self.localmetadata.GameID), encoding='utf-8')
-        m.update(bytes(self.localmetadata.LastModified), encoding='utf-8')
-        m.update(bytes(self.localmetadata.DeviceID), encoding='utf-8')
+        gameID_bytes = self.localmetadata.GameID.encode('utf-8')
+        m.update(gameID_bytes)
+        lastMod_bytes = str(self.localmetadata.LastModified).encode('utf-8')
+        m.update(lastMod_bytes)
+        deviceID_bytes = self.localmetadata.DeviceID.encode('utf-8')
+        m.update(deviceID_bytes)
         return m.hexdigest()
 
     def append_metadata(self):
