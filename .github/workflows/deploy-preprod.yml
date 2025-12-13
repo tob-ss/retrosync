@@ -57,6 +57,6 @@ jobs:
 
           # Docker compose up
           echo "Docker compose up"
-          docker compose up
+          docker compose up -d
         echo "Finished deployment!"
         EOF
