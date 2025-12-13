@@ -21,23 +21,30 @@ jobs:
     - name: Deploy to server
       run: |
         echo "Starting deployment..."
+        echo "SSHing into server"
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+          echo "Moving to retrosync directory"
           cd /retrosync/retrosync
 
           # Set GitHub credentials using GITHUB_TOKEN
+          echo "Setting Github Credentials"
           git config --global credential.helper store
           echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
 
           # Pull the latest code from the repository
+          echo "Pulling code"
           git pull origin feat/phase2-frontend
 
           # Docker compose down
+          echo "Docker compose down"
           docker compose down
 
           # Docker compose build
+          echo "Docker compose build"
           docker compose build
 
           # Docker compose up
+          echo "Docker compose up"
           docker compose up
         echo "Finished deployment!"
         EOF
