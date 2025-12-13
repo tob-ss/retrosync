@@ -6,14 +6,22 @@ import models, schemas, crud
 from sqlalchemy.orm import Session
 from decimal import Decimal, getcontext
 import time
+import hashlib
 
 class LocalMetadataProcessor:
     def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
         self.localmetadata = localmetadata
         self.db = db
 
+    def hash_generator(self):
+        m = hashlib.sha256()
+        m.update(self.localmetadata.GameID)
+        m.update(self.localmetadata.LastModified)
+        m.update(self.localmetadata.DeviceID)
+        return m.hexdigest()
+
     def append_metadata(self):
-        md_hash = str(int(hash(self.localmetadata.GameID)) + int(hash(self.localmetadata.LastModified)) + int(hash(self.localmetadata.DeviceID)))
+        md_hash = self.hash_generator()
         if self.localmetadata.LID == "CL":
             delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
             delete_dupes.get_gamesby_LID()
