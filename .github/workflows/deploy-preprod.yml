@@ -36,7 +36,7 @@ jobs:
         echo "SSHing into server"
         ssh external-machine << EOF
           echo "Moving to retrosync directory"
-          cd /retrosync/retrosync
+          cd retrosync/retrosync
 
           # Set GitHub credentials using GITHUB_TOKEN
           echo "Setting Github Credentials"
