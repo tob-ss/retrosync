@@ -15,7 +15,7 @@ services:
   frontend:
     build: ./Frontend/retrosync-preprod
     volumes:
-      - ./Frontend/retrosync-preprod:/usr/src/app
+      - db_frontend:./Frontend/retrosync-preprod:/usr/src/app
     ports:
       - "3000:3000"
     networks:
@@ -28,7 +28,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/code
+      - db_api:.:/code
     env_file:
       - .env
     networks:
