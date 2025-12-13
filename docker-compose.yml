@@ -30,7 +30,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - db_api:.:/code
+      - .:/code
     env_file:
       - .env
     networks:
