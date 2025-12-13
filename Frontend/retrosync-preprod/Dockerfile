@@ -2,7 +2,6 @@
 FROM node:alpine
 
 # Create and define the node_modules's cache directory.
-RUN mkdir /usr/src/cache
 WORKDIR /usr/src/cache
 
 # Install the application's dependencies into the node_modules's cache directory.
