@@ -47,7 +47,7 @@ def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = De
         append_SR = SRP(db, syncrequest)
         return append_SR.append_syncrequest()
     except Exception:
-        raise HTTPException(status_code=405, detail=f"No idea wtf happened ngl, heres the body of the request {syncrequest}")
+        raise HTTPException(status_code=405, detail=f"No idea what happened ngl, heres the body of the request {syncrequest}")
 
 @app.get("/sync/status/")
 def get_sync_completion(DeviceID: str, db: Session = Depends((get_db))):
