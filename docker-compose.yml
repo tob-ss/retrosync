@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.2
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+    volumes:
+      - db_data:/var/lib/mysql
+  frontend:
+    build: ./Frontend/retrosync-preprod
+    volumes:
+      - ./Frontend/retrosync-preprod:/usr/src/
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+    environment:
+      NODE_ENV: development
+    command: /usr/src/app/entrypoint.sh
+  api:
+    build: ./API
+    ports:
+      - "80:80"
+    volumes:
+      - .:/code
+    env_file:
+      - .env
+    networks:
+      - backend
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+volumes:
+  db_data:

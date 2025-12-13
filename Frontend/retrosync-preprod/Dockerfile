@@ -1,19 +1,15 @@
 # Fetching the latest node image on alpine linux
 FROM node:alpine AS development
 
-# Declaring env
-ENV NODE_ENV development
+# Create and define the node_modules's cache directory.
+RUN mkdir /usr/src/cache
+WORKDIR /usr/src/cache
 
-# Setting up the work directory
-WORKDIR /react-app
-
-# Installing dependencies
-COPY ./package*.json /react-app
-
+# Install the application's dependencies into the node_modules's cache directory.
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 
-# Copying all the files in our project
-COPY . .
-
-# Starting our application
-CMD ["npm","start"]
+# Create and define the application's working directory.
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
