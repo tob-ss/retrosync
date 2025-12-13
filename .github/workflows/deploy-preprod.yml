@@ -23,7 +23,7 @@ jobs:
       run: |
         echo "Starting deployment.."
         echo "SSHing into server"
-        ssh -i ~/.ssh/id_github -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
           echo "Moving to retrosync directory"
           cd /retrosync/retrosync
 
