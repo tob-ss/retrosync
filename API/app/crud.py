@@ -3,17 +3,17 @@ from sqlalchemy import and_
 import models, schemas
 
 
-def create_metadata(db: Session, metadata: schemas.MetadataCreate):
+def create_metadata(db: Session, metadata: schemas.MetadataCreate, hash: int):
     from main import MetadataModel
-    db_metadata = MetadataModel(LID=metadata.LID, GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
+    db_metadata = MetadataModel(Hash=hash, LID=metadata.LID, GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
     db.add(db_metadata)
     db.commit()
     db.refresh(db_metadata)
     return db_metadata
 
-def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate):
+def create_metadata_cloud(db: Session, metadata: schemas.MetadataCreate, hash: int):
     from main import MetadataModel
-    db_metadata = MetadataModel(LID=metadata.LID, GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
+    db_metadata = MetadataModel(Hash=hash,LID=metadata.LID, GameID=metadata.GameID, GameName=metadata.GameName, LastModified=metadata.LastModified, DeviceID=metadata.DeviceID, Cloud=metadata.Cloud)
     db.add(db_metadata)
     db.commit()
     db.refresh(db_metadata)

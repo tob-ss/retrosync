@@ -14,13 +14,12 @@ class LocalMetadataProcessor:
 
     def append_metadata(self):
         md_hash = str(int(hash(self.localmetadata.GameID)) + int(hash(self.localmetadata.LastModified)) + int(hash(self.localmetadata.DeviceID)))
-        print("Testing out making a hash: " + md_hash)
         if self.localmetadata.LID == "CL":
             delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
             delete_dupes.get_gamesby_LID()
-            return crud.create_metadata_cloud(self.db, self.localmetadata)
+            return crud.create_metadata_cloud(self.db, self.localmetadata, hash=md_hash)
         else:
-            return crud.create_metadata(self.db, self.localmetadata)
+            return crud.create_metadata(self.db, self.localmetadata, hash=md_hash)
         
 class LocalMetadataFlusher:
     def __init__(self, db: Session, DeviceID: str):
@@ -41,33 +40,7 @@ class LocalMetadataFlusher:
             else:
                 continue
         return {"DeviceID": "Just work bruv"}
-        """
-        print("debug0")
-        print(db_localmetadata)
-        if not db_localmetadata is None:
-            print("debug1")
-            for x in db_localmetadata:
-                if db_localmetadata == []:
-                    print("debug6") 
-                    continue
-                else:
-                    print(f"debug2: {x}")
-                    if x.LID == "L" and x.DeviceID == self.DeviceID:
-                        print("debug3")
-                        self.db.delete(x)
-                        print("debug4")
-                        self.db.commit()
-                        print("debug5")
-                        print(f"row LID is {x.LID} and row device is {x.DeviceID}")
-                    else:
-                        print("debug8")
-                        pass
-        else:
-            print("debug7")
-            pass
-        """
 
-            
 class SyncRequestProcessor:
     def __init__(self, db: Session, syncrequest: schemas.SyncRequestsCreate):
         self.syncrequest = syncrequest
@@ -93,13 +66,6 @@ class DupeCloudMDRemover:
                 self.db.commit()
             else: 
                 continue
-            #print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
-            #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
-            
-        #return LID_table
-    #def delete_dupe_games(self):
-    #    print(self.get_gamesby_LID())
-
 
 class DaemonStatusChecker:
     def __init__(self, db: Session, DeviceID: str):

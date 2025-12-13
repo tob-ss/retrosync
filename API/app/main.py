@@ -30,6 +30,8 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
     append_LMD = LMP(db, metadata)
     return append_LMD.append_metadata()
 
+#@app.get("/metadata/fetch", response_model=)
+
 @app.post("/metadata/delete/localflush/", response_model=schemas.Metadata_Device)
 def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
     try:
@@ -60,6 +62,8 @@ def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = 
 def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
     get_status = DSC(db, DeviceID)
     return get_status.online_calculator()
+
+
                      
 
 """
