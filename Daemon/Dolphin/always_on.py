@@ -113,13 +113,13 @@ while True:
 
     daemon_ID.pop("LastOnline")
 
-    sync_request = requests.get(syncstatus_url, params = daemon_ID)
+    #sync_request = requests.get(syncstatus_url, params = daemon_ID)
 
-    request_data = dict(sync_request.text)
+    #request_data = dict(sync_request.text)
 
-    if request_data != "null":
-        if request_data["GameID"] == "ALL":
-            upload_saves = classes.sync_handler()
+    #if request_data != "null":
+     #   if request_data["GameID"] == "ALL":
+      #      upload_saves = classes.sync_handler()
 
 
    

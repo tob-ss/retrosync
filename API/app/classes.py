@@ -6,19 +6,31 @@ import models, schemas, crud
 from sqlalchemy.orm import Session
 from decimal import Decimal, getcontext
 import time
+import hashlib
 
 class LocalMetadataProcessor:
     def __init__(self, db: Session, localmetadata: schemas.MetadataCreate):
         self.localmetadata = localmetadata
         self.db = db
 
+    def hash_generator(self):
+        m = hashlib.sha256()
+        gameID_bytes = self.localmetadata.GameID.encode('utf-8')
+        m.update(gameID_bytes)
+        lastMod_bytes = str(self.localmetadata.LastModified).encode('utf-8')
+        m.update(lastMod_bytes)
+        deviceID_bytes = self.localmetadata.DeviceID.encode('utf-8')
+        m.update(deviceID_bytes)
+        return m.hexdigest()
+
     def append_metadata(self):
+        md_hash = self.hash_generator()
         if self.localmetadata.LID == "CL":
             delete_dupes = DupeCloudMDRemover(db=self.db, LID=self.localmetadata.LID, GameID=self.localmetadata.GameID, LastModified=self.localmetadata.LastModified, DeviceID=self.localmetadata.DeviceID)
             delete_dupes.get_gamesby_LID()
-            return crud.create_metadata_cloud(self.db, self.localmetadata)
+            return crud.create_metadata_cloud(self.db, self.localmetadata, hash=md_hash)
         else:
-            return crud.create_metadata(self.db, self.localmetadata)
+            return crud.create_metadata(self.db, self.localmetadata, hash=md_hash)
         
 class LocalMetadataFlusher:
     def __init__(self, db: Session, DeviceID: str):
@@ -39,33 +51,7 @@ class LocalMetadataFlusher:
             else:
                 continue
         return {"DeviceID": "Just work bruv"}
-        """
-        print("debug0")
-        print(db_localmetadata)
-        if not db_localmetadata is None:
-            print("debug1")
-            for x in db_localmetadata:
-                if db_localmetadata == []:
-                    print("debug6") 
-                    continue
-                else:
-                    print(f"debug2: {x}")
-                    if x.LID == "L" and x.DeviceID == self.DeviceID:
-                        print("debug3")
-                        self.db.delete(x)
-                        print("debug4")
-                        self.db.commit()
-                        print("debug5")
-                        print(f"row LID is {x.LID} and row device is {x.DeviceID}")
-                    else:
-                        print("debug8")
-                        pass
-        else:
-            print("debug7")
-            pass
-        """
 
-            
 class SyncRequestProcessor:
     def __init__(self, db: Session, syncrequest: schemas.SyncRequestsCreate):
         self.syncrequest = syncrequest
@@ -91,13 +77,6 @@ class DupeCloudMDRemover:
                 self.db.commit()
             else: 
                 continue
-            #print(f"full information comparison on current row: ID: {x.ID}, row LID: {x.LID} vs passed LID: {self.LID}, GameID: {x.GameID} vs passed GameID: {self.GameID}, row GameName: {x.GameName}, row LastMod: {x.LastModified} vs passed LastMod: {self.LastModified}")
-            #for x in lid table, if self.db.query(x).filter(x.gameid == self.gameid, x.lastmod == self.lastmod). maybe .first()? if not do a second loop with .all()
-            
-        #return LID_table
-    #def delete_dupe_games(self):
-    #    print(self.get_gamesby_LID())
-
 
 class DaemonStatusChecker:
     def __init__(self, db: Session, DeviceID: str):
@@ -107,6 +86,8 @@ class DaemonStatusChecker:
     def get_daemon_status(self):
         from main import DaemonStatusModel
         db_daemonstatus = self.db.query(DaemonStatusModel).filter(DaemonStatusModel.DeviceID == self.DeviceID).first()
+        if db_daemonstatus == None:
+            return 0
         self.db.commit()
         self.db.refresh(db_daemonstatus)
         LastOnline = db_daemonstatus.LastOnline
@@ -115,7 +96,8 @@ class DaemonStatusChecker:
     def online_calculator(self):
         x = 0
         LastOnline1 = self.get_daemon_status()
-        print(LastOnline1)
+        if LastOnline1 == 0:
+            return 0
         while x <= 24:
             x += 1
             time.sleep(5)

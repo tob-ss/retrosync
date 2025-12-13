@@ -1,8 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException, Depends, Request, status
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base, get_db
 from models import create_dynamic_metadata, create_dynamic_syncrequests, create_dynamic_daemonstatus
 import models, schemas, crud
@@ -10,6 +8,14 @@ from sqlalchemy.orm import Session
 from classes import LocalMetadataProcessor as LMP, SyncRequestProcessor as SRP, DupeCloudMDRemover as DCR, LocalMetadataFlusher as LMF, DaemonStatusChecker as DSC, SyncCompletionChecker as SCC
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 MetadataModel = create_dynamic_metadata("test")
 SyncRequestModel = create_dynamic_syncrequests("test")
@@ -24,6 +30,8 @@ def create_metadata(metadata: schemas.MetadataCreate, db: Session = Depends(get_
     append_LMD = LMP(db, metadata)
     return append_LMD.append_metadata()
 
+#@app.get("/metadata/fetch", response_model=)
+
 @app.post("/metadata/delete/localflush/", response_model=schemas.Metadata_Device)
 def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
     try:
@@ -35,8 +43,11 @@ def flush_localmetadata(DeviceID: str, db: Session = Depends(get_db)):
 
 @app.post("/sync/append/", response_model=schemas.SyncRequests)
 def create_syncrequest(syncrequest: schemas.SyncRequestsCreate, db: Session = Depends(get_db)):
-    append_SR = SRP(db, syncrequest)
-    return append_SR.append_syncrequest()
+    try:
+        append_SR = SRP(db, syncrequest)
+        return append_SR.append_syncrequest()
+    except Exception:
+        raise HTTPException(status_code=405, detail=f"No idea wtf happened ngl, heres the body of the request {syncrequest}")
 
 @app.get("/sync/status/")
 def get_sync_completion(DeviceID: str, db: Session = Depends((get_db))):
@@ -51,6 +62,8 @@ def create_daemonstatus(daemonstatus: schemas.DaemonStatusCreate, db: Session = 
 def get_daemonstatus(DeviceID: str, db: Session = Depends((get_db))):
     get_status = DSC(db, DeviceID)
     return get_status.online_calculator()
+
+
                      
 
 """
