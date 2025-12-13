@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8.2
+    container_name: database
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
@@ -13,18 +14,19 @@ services:
     volumes:
       - db_data:/var/lib/mysql
   frontend:
+    container_name: frontend
     build: ./Frontend/retrosync-preprod
     volumes:
-      - db_frontend:./Frontend/retrosync-preprod:/usr/src/app
+      - ./Frontend/retrosync-preprod:/usr/src/app
     ports:
       - "3000:3000"
     networks:
       - frontend
     environment:
       NODE_ENV: development
-    command: /usr/src/app/entrypoint.sh
   api:
     build: ./API
+    container_name: apiserver
     ports:
       - "80:80"
     volumes:
