@@ -23,6 +23,7 @@ spec:
           {{- end }}
         vault.hashicorp.com/role: "vault-role"
     spec:
+      serviceAccountName: vault-serviceaccount
       containers:
       - image: mysql:8.2
         name: mysql
