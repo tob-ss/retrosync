@@ -4,11 +4,12 @@ metadata:
   name: mysql-service
   namespace: preproduction
 spec:
-  clusterIP: None
+  type: NodePort
   selector:
     app: mysql
   ports:
     - name: mysql
+      nodePort: 32000
       protocol: TCP
       port: 3306
       targetPort: 3306
