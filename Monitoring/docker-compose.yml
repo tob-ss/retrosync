@@ -31,15 +31,18 @@ services:
       - "9100:9100"
     restart: unless-stopped
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image:  ghcr.io/google/cadvisor:v0.53.0
     container_name: cadvisor
     ports:
       - 8080:8080
     volumes:
-      - /:/rootfs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:rw
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    device:
+      - /dev/kmsg
   blackbox-exporter:
     image: prom/blackbox-exporter:latest
     container_name: blackbox-exporter
@@ -48,6 +51,7 @@ services:
     volumes:
       - ./blackbox.yml:/etc/blackbox_exporter/config.yml
     restart: unless-stopped
+
 volumes:
   grafana-data:
   prometheus-data:
