@@ -18,8 +18,8 @@ spec:
         vault.hashicorp.com/agent-inject-status: "update"
         vault.hashicorp.com/agent-inject-secret-MYSQL_ROOT_PASSWORD: "secret/MYSQL_ROOT_PASSWORD"
         vault.hashicorp.com/agent-inject-template-my-first-secret: |
-          {{- with secret "secret/my-first-secret" -}}
-          MYSQL_ROOT_PASSWORD={{ .Data.data.MYSQL_ROOT_PASSWORD }}
+          {{- with secret "secret/MYSQL_ROOT_PASSWORD" -}}
+          MYSQL_ROOT_PASSWORD={{ .Data.data.MYSQL_PASSWORD }}
           {{- end }}
         vault.hashicorp.com/role: "vault-role"
     spec:
