@@ -36,11 +36,11 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /:/rootfs:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
+      - /:/rootfs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /sys:/sys:rw
+      - /var/lib/docker/:/var/lib/docker:rw
+      - /dev/disk/:/dev/disk:rw
     privileged: true
   blackbox-exporter:
     image: prom/blackbox-exporter:latest
