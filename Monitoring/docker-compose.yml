@@ -42,6 +42,8 @@ services:
       - /var/lib/docker/:/var/lib/docker:rw
       - /dev/disk/:/dev/disk:rw
     privileged: true
+    devices:
+      - /dev/kmsg
   blackbox-exporter:
     image: prom/blackbox-exporter:latest
     container_name: blackbox-exporter
