@@ -33,10 +33,10 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
-          command:
-            ['sh', '-c']
-          args:
-            ['source /vault/secrets/config && <entrypoint script>']
+        command:
+          ['sh', '-c']
+        args:
+          ['source /vault/secrets/config && <entrypoint script>']
 
       volumes:
       - name: mysql-persistent-storage
