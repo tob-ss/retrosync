@@ -36,7 +36,7 @@ spec:
         command:
           ['sh', '-c']
         args:
-          ['source /vault/secrets/config && <entrypoint script>']
+          ['source /vault/secrets/config']
 
       volumes:
       - name: mysql-persistent-storage
