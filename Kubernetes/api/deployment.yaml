@@ -20,7 +20,7 @@ spec:
         image: tobsss/api-preprod:latest
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8000
+        - containerPort: 80
         envFrom:
         - secretRef:
             name: mysql-variables
