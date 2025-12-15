@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: tobsss/frontend-preprod:latest
+          image: tobsss/frontend-preprod:v0.2.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
