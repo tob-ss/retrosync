@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 0,
   "links": [],
   "panels": [
     {
@@ -385,7 +385,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[$duration])) / sum(kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"cpu\"})",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[$duration])) / sum(kube_pod_container_resource_limits{namespace=\"$namespace\", resource=\"cpu\"})",
           "interval": "",
           "legendFormat": "CPU(%)",
           "range": true,
@@ -397,7 +397,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"}) / sum(kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"memory\"})",
+          "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"}) / sum(kube_pod_container_resource_limits{namespace=\"$namespace\", resource=\"memory\"})",
           "interval": "",
           "legendFormat": "Memory(%)",
           "range": true,
@@ -830,7 +830,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_swap{namespace=\"$namespace\", pod=\"$pod\"}) by (pod)",
+          "expr": "sum(container_memory_swap{namespace=\"$namespace\"})",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Swap",
@@ -843,7 +843,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_memory_failcnt{namespace=\"$namespace\", pod=\"$pod\"}[$duration])) by (pod)",
+          "expr": "sum(rate(container_memory_failcnt{namespace=\"$namespace\"}[$duration]))",
           "interval": "",
           "legendFormat": "Hits limits",
           "range": true,
@@ -948,7 +948,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(round(increase(container_oom_events_total{namespace=\"$namespace\", pod=\"$pod\"}[$duration])))",
+          "expr": "sum(round(increase(container_oom_events_total{namespace=\"$namespace\"}[$duration])))",
           "instant": false,
           "legendFormat": "OOM",
           "range": true,
@@ -1086,7 +1086,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"$namespace\", pod=\"$pod\"}[$duration]))",
+          "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"$namespace\"}[$duration]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "In",
@@ -1099,7 +1099,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"$namespace\", pod=\"$pod\"}[$duration]))",
+          "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"$namespace\"}[$duration]))",
           "interval": "",
           "legendFormat": "Out",
           "range": true,
@@ -1233,7 +1233,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(container_threads{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\"})",
+          "expr": "sum(container_threads{namespace=\"$namespace\"})",
           "interval": "",
           "intervalFactor": 5,
           "legendFormat": "Thread",
@@ -1296,8 +1296,8 @@
       },
       {
         "current": {
-          "text": "monitoring",
-          "value": "monitoring"
+          "text": "preproduction",
+          "value": "preproduction"
         },
         "datasource": {
           "type": "prometheus",
@@ -1319,7 +1319,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1338,5 +1338,5 @@
   "timezone": "",
   "title": "Kubernetes Pod Dashboard",
   "uid": "4b545447f",
-  "version": 9
+  "version": 14
 }

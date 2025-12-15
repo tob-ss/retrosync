@@ -1,0 +1,9 @@
+deployment:
+  resources:
+    limits:
+      memory: 500Mi
+      cpu: "250m"
+    requests:
+      memory: 250m
+      cpu: "200m"       
+       

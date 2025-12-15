@@ -35,11 +35,11 @@ spec:
           mountPath: /var/lib/mysql
         resources:
           limits:
-            memory: 500M
-            cpu: "250m"
+            memory: {{ .Values.deployment.resources.limits.memory}}
+            cpu: {{ .Values.deployment.resources.limits.cpu}}
           requests: 
-            memory: 150M
-            cpu: "100m"
+            memory: {{ .Values.deployment.resources.requests.memory}}
+            cpu: {{ .Values.deployment.resources.requests.cpu}}
   volumeClaimTemplates:
   - metadata:
       name: mysql-data
