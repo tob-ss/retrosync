@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: mysql-service
   namespace: preproduction
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3306"
 spec:
   type: NodePort
   selector:
