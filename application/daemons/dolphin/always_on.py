@@ -24,10 +24,10 @@ old_list_file_number_check = []
 
 old_list_modified_date = []
 
-add_metadata = "http://37.27.217.84/metadata/append/"
-flush_local = "http://37.27.217.84/metadata/delete/localflush/"
-daemonstatus_url = "http://37.27.217.84//daemon/status/"
-syncstatus_url = "http://37.27.217.84//sync/status/"
+add_metadata = "http://37.27.217.84:30020/metadata/append/"
+flush_local = "http://37.27.217.84:30020/metadata/delete/localflush/"
+daemonstatus_url = "http://37.27.217.84:30020//daemon/status/"
+syncstatus_url = "http://37.27.217.84:30020/sync/status/"
 
 daemonstatus_dict = {"DeviceID": "Test Device"}
 
