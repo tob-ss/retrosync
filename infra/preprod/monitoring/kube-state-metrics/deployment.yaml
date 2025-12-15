@@ -9,7 +9,7 @@ metadata:
   namespace: kube-system
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/port: 8080
+    prometheus.io/port: 8085
 spec:
   replicas: 1
   selector:
