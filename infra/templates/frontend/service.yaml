@@ -3,9 +3,6 @@ kind: Service
 metadata:
   name: frontend-service
   namespace: preproduction
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "3000"
 spec:
   selector:
     app: frontend
