@@ -4,6 +4,6 @@ deployment:
       memory: 500Mi
       cpu: "250m"
     requests:
-      memory: 250m
-      cpu: "200m"       
+      memory: 150m
+      cpu: "100m"       
        
