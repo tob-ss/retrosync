@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-limits
+  namespace: preproduction
+spec:
+  limits:
+  - max:
+      cpu: "250m"
+      memory: "500Mi"
+    default:
+      cpu: "150m"
+      memory: "256Mi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "150Mi"
+    type: Container
