@@ -5,7 +5,7 @@ metadata:
   namespace: preproduction
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/port: 8080
+    prometheus.io/port: "8080"
 spec:
   replicas: 3
   selector:
