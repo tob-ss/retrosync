@@ -3,9 +3,6 @@ kind: Deployment
 metadata:
   name: frontend
   namespace: preproduction
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "8080"
 spec:
   replicas: 3
   selector:
@@ -15,6 +12,9 @@ spec:
     metadata:
       labels:
         app: frontend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
         - name: react-app

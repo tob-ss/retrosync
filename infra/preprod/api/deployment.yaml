@@ -3,9 +3,6 @@ kind: Deployment
 metadata:
   name: api-server
   namespace: preproduction
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "8080"
   labels:
     app: api-server
 spec:
@@ -17,6 +14,9 @@ spec:
     metadata:
       labels:
         app: api-server
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
       - name: fastapi-container
