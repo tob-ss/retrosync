@@ -1,0 +1,23 @@
+project: default
+source:
+  repoURL: https://github.com/tob-ss/retrosync
+  path: infrastructure
+  targetRevision: new_main
+  helm:
+    valueFiles:
+      - environments/dev/api/values.yaml
+      - environments/dev/api/version.yaml
+      - environments/dev/database/values.yaml
+      - environments/dev/database/version.yaml
+      - environments/dev/frontend/values.yaml
+      - environments/dev/frontend/version.yaml
+      - environments/dev/management/values.yaml
+      - environments/dev/management/version.yaml
+destination:
+  server: https://kubernetes.default.svc
+syncPolicy:
+  automated:
+    prune: true
+    enabled: true
+  syncOptions:
+    - CreateNamespace=true

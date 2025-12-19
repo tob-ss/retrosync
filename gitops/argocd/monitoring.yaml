@@ -1,0 +1,14 @@
+
+project: default
+source:
+  repoURL: https://github.com/tob-ss/retrosync
+  path: monitoring
+  targetRevision: new_main
+destination:
+  server: https://kubernetes.default.svc
+syncPolicy:
+  automated:
+    prune: true
+    enabled: true
+  syncOptions:
+    - CreateNamespace=true
