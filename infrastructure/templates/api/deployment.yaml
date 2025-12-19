@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: fastapi-container
-        image: {{ .Version.deployment.image.name }}:{{ .Version.deployment.image.tag }}
+        image: {{ .Values.deployment.image.name }}:{{ .Values.deployment.image.tag }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
