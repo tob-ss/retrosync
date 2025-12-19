@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: retrosync-prod
+spec:
+  destination:
+    namespace: retrosync-prod
+    server: https://kubernetes.default.svc
+  source:
+    path: infrastructure
+    repoURL: https://github.com/tob-ss/retrosync
+    targetRevision: new_main
+    helm:
+      valueFiles:
+        - environments/prod/api/values.yaml
+        - environments/prod/api/version.yaml
+        - environments/prod/database/values.yaml
+        - environments/prod/database/version.yaml
+        - environments/prod/frontend/values.yaml
+        - environments/prod/frontend/version.yaml
+        - environments/prod/management/values.yaml
+        - environments/prod/management/version.yaml
+  sources: []
+  project: retrosync
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
