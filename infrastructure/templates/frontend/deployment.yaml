@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: tobsss/frontend-preprod:v0.2.0
+          image: {{ .Values.deployment.image.name }}:{{ .Values.deployment.image.tag }}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

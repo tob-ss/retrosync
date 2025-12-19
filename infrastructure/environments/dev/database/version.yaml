@@ -1,0 +1,4 @@
+deployment:
+  image:
+    name: mysql
+    tag: 8.2
