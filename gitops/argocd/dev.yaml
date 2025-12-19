@@ -1,23 +1,31 @@
-project: default
-source:
-  repoURL: https://github.com/tob-ss/retrosync
-  path: infrastructure
-  targetRevision: new_main
-  helm:
-    valueFiles:
-      - environments/dev/api/values.yaml
-      - environments/dev/api/version.yaml
-      - environments/dev/database/values.yaml
-      - environments/dev/database/version.yaml
-      - environments/dev/frontend/values.yaml
-      - environments/dev/frontend/version.yaml
-      - environments/dev/management/values.yaml
-      - environments/dev/management/version.yaml
-destination:
-  server: https://kubernetes.default.svc
-syncPolicy:
-  automated:
-    prune: true
-    enabled: true
-  syncOptions:
-    - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: retrosync-dev
+spec:
+  destination:
+    namespace: retrosync-dev
+    server: https://kubernetes.default.svc
+  source:
+    path: infrastructure
+    repoURL: https://github.com/tob-ss/retrosync
+    targetRevision: new_main
+    helm:
+      valueFiles:
+        - environments/dev/api/values.yaml
+        - environments/dev/api/version.yaml
+        - environments/dev/database/values.yaml
+        - environments/dev/database/version.yaml
+        - environments/dev/frontend/values.yaml
+        - environments/dev/frontend/version.yaml
+        - environments/dev/management/values.yaml
+        - environments/dev/management/version.yaml
+  sources: []
+  project: retrosync
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
