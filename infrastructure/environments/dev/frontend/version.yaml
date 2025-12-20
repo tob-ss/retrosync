@@ -1,4 +1,4 @@
-deployment:
-  image:
+version:
+  frontend:
     name: tobsss/frontend-preprod
     tag: v0.2.0

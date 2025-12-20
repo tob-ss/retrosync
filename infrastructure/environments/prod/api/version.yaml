@@ -1,4 +1,4 @@
-deployment:
-  image:
+version:
+  api:
     name: tobsss/api-preprod
     tag: latest
