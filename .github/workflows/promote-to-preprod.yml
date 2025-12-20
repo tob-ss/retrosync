@@ -34,7 +34,7 @@ jobs:
           cp infrastructure/environments/dev/frontend/version.yaml infrastructure/environments/preprod/frontend/version.yaml
           cp infrastructure/environments/dev/management/version.yaml infrastructure/environments/preprod/management/version.yaml
           # push the change to the new branch
-          git add app/environments/preprod/.
+          git add infrastructure/environments/preprod/.
           git commit -m "Promote development to preprod"
           git push -u origin preprod/${{ github.sha }}
       - run: |
