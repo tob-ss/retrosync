@@ -10,7 +10,6 @@ if [ ! -f "$VERSION_FILE" ]; then
 fi
 
 VERSION=$(cat "$VERSION_FILE")
-
 NEW_VERSION=$((VERSION+1))
 
 docker build -t tobsss/${IMAGE_NAME}:${TAG_BASE}.$NEW_VERSION .
