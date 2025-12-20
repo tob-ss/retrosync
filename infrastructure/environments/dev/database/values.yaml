@@ -10,6 +10,9 @@ database:
   nodePort: 32000
   replicas: 1
 
+statefulset:
+  name: mysql-statefulset-dev
+
 PersistentVolume:
   metadata:
     name: mysql-pv-dev
