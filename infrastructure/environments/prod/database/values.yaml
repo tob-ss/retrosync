@@ -6,4 +6,9 @@ deployment:
     requests:
       memory: 150m
       cpu: "100m"       
-       
+database:
+  nodePort: 32002
+
+PersistentVolume:
+  metadata:
+    name: mysql-pv-prod

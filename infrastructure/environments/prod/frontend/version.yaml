@@ -1,0 +1,4 @@
+deployment:
+  image:
+    name: tobsss/frontend-preprod
+    tag: v0.2.0
