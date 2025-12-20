@@ -7,6 +7,4 @@ deployment:
       memory: 150m
       cpu: "100m"       
 
-service:
-  spec:
-    nodePort: 30020
+nodePort: 30020

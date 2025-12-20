@@ -7,9 +7,7 @@ deployment:
       memory: 150m
       cpu: "100m"       
        
-service:
-  spec:
-    nodePort: 32000
+nodePort: 32000
 
 PersistentVolume:
   metadata:
