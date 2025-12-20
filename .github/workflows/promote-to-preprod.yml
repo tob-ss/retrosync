@@ -41,7 +41,7 @@ jobs:
           git push -u origin pre-prod/${{ github.sha }}
       - run: |
           gh pr create \
-            -B main \
+            -B new_main \
             -H pre-prod/${{ github.sha }} \
             --title "Promote development to preprod" \
             --body "Automatically created by GitHub Actions"
