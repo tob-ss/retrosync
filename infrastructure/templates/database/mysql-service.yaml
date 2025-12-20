@@ -8,7 +8,7 @@ spec:
     app: mysql
   ports:
     - name: mysql
-      nodePort: {{ .Values.nodePort}}
+      nodePort: {{ .Values.database.nodePort}}
       protocol: TCP
       port: 3306
       targetPort: 3306

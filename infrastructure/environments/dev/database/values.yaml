@@ -6,8 +6,8 @@ deployment:
     requests:
       memory: 150m
       cpu: "100m"       
-       
-nodePort: 32000
+database:       
+  nodePort: 32000
 
 PersistentVolume:
   metadata:

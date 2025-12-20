@@ -1,1 +1,2 @@
-nodePort: 30040
+frontend:
+  nodePort: 30040

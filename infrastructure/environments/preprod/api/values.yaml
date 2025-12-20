@@ -6,5 +6,5 @@ deployment:
     requests:
       memory: 150m
       cpu: "100m"       
-       
-nodePort: 30021
+api:       
+  nodePort: 30021
