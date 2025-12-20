@@ -16,3 +16,6 @@ statefulset:
 PersistentVolume:
   metadata:
     name: mysql-pv-prod
+  claimRef:
+    name: mysql-data-mysql-statefulset-prod-0
+    namespace: retrosync-prod

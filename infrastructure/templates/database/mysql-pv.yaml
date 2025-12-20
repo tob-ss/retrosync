@@ -8,5 +8,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: {{ .Values.PersistentVolume.claimRef.name}}
+    namespace: {{ .Values.PersistentVolume.claimRef.namespace}}
   hostPath:
     path: /mnt/data # Specify a path in the host for storage
