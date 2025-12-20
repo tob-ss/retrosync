@@ -8,6 +8,7 @@ deployment:
       cpu: "100m"       
 database:       
   nodePort: 32000
+  replicas: 1
 
 PersistentVolume:
   metadata:

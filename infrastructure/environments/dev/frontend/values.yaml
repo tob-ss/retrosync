@@ -1,2 +1,3 @@
 frontend:
   nodePort: 30040
+  replicas: 1

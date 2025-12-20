@@ -8,3 +8,4 @@ deployment:
       cpu: "100m"       
 api:       
   nodePort: 30021
+  replicas: 1
