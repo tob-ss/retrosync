@@ -10,3 +10,7 @@ deployment:
 service:
   spec:
     nodePort: 32001
+
+PersistentVolume:
+  metadata:
+    name: mysql-pv-preprod
