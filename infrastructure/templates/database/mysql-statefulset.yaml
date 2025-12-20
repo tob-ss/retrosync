@@ -26,6 +26,7 @@ spec:
             - retrosync-dev
             - retrosync-preprod
             - retrosync-prod
+            topologyKey: "kubernetes.io/hostname"
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
