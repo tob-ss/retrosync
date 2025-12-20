@@ -18,17 +18,18 @@ spec:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 50
-            labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - api-server
-            namespaces: 
-            - retrosync-dev
-            - retrosync-preprod
-            - retrosync-prod
-            topologyKey: "kubernetes.io/hostname"
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - api-server
+              namespaces: 
+              - retrosync-dev
+              - retrosync-preprod
+              - retrosync-prod
+              topologyKey: "kubernetes.io/hostname"
       containers:
       - name: fastapi-container
         image: {{ .Values.version.api.name }}:{{ .Values.version.api.tag }}
