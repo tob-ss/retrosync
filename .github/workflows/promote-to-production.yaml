@@ -31,12 +31,12 @@ jobs:
         
 
           # promote the change
-          cp infrastructure/environments/preprod/api/version.yaml infrastructure/environments/production/api/version.yaml
-          cp infrastructure/environments/preprod/database/version.yaml infrastructure/environments/production/database/version.yaml
-          cp infrastructure/environments/preprod/frontend/version.yaml infrastructure/environments/production/frontend/version.yaml
-          cp infrastructure/environments/preprod/management/version.yaml infrastructure/environments/production/management/version.yaml
+          cp infrastructure/environments/preprod/api/version.yaml infrastructure/environments/prod/api/version.yaml
+          cp infrastructure/environments/preprod/database/version.yaml infrastructure/environments/prod/database/version.yaml
+          cp infrastructure/environments/preprod/frontend/version.yaml infrastructure/environments/prod/frontend/version.yaml
+          cp infrastructure/environments/preprod/management/version.yaml infrastructure/environments/prod/management/version.yaml
           # push the change to the new branch
-          git add infrastructure/environments/production/.
+          git add infrastructure/environments/prod/.
           git commit -m "Promote development to production"
           git push -u origin production/${{ github.sha }}
       - run: |
