@@ -1,0 +1,47 @@
+# .github/workflows/promote-to-preprod.yaml
+name: Promote to preprod
+
+on:
+  push:
+    branches:
+      - new_main
+    paths:
+      - infrastructure/environments/dev/api/version.yaml
+      - infrastructure/environments/dev/database/version.yaml
+      - infrastructure/environments/dev/frontend/version.yaml
+      - infrastructure/environments/dev/management/version.yaml
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          # configure git client
+          git config --global user.email "<email address>"
+          git config --global user.name "<name>"
+
+          # create a new branch
+          git switch -c preprod/${{ github.sha }}
+
+          # promote the change
+          cp infrastructure/environments/dev/api/version.yaml infrastructure/environments/preprod/api/version.yaml
+          cp infrastructure/environments/dev/database/version.yaml infrastructure/environments/preprod/database/version.yaml
+          cp infrastructure/environments/dev/frontend/version.yaml infrastructure/environments/preprod/frontend/version.yaml
+          cp infrastructure/environments/dev/management/version.yaml infrastructure/environments/preprod/management/version.yaml
+          # push the change to the new branch
+          git add app/environments/preprod/.
+          git commit -m "Promote development to preprod"
+          git push -u origin preprod/${{ github.sha }}
+      - run: |
+          gh pr create \
+            -B main \
+            -H preprod/${{ github.sha }} \
+            --title "Promote development to preprod" \
+            --body "Automatically created by GitHub Actions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
