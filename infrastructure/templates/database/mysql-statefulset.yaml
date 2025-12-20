@@ -13,30 +13,30 @@ spec:
       labels:
         app: mysql
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - mysql
-            namespaces: 
-            - retrosync-dev
-            - retrosync-preprod
-            - retrosync-prod
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - api-server
-            topologyKey: "kubernetes.io/hostname"
+      - affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - mysql
+              namespaces: 
+              - retrosync-dev
+              - retrosync-preprod
+              - retrosync-prod
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - api-server
+              topologyKey: "kubernetes.io/hostname"
         containers:
-      - name: mysql
+        name: mysql
         image: {{ .Values.version.database.name }}:{{ .Values.version.database.tag }}
         ports:
         - containerPort: 3306
