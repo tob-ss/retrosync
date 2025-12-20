@@ -14,6 +14,20 @@ spec:
       labels:
         app: api-server
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - api-server
+            namespaces: 
+            - retrosync-dev
+            - retrosync-preprod
+            - retrosync-prod
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: fastapi-container
         image: {{ .Values.version.api.name }}:{{ .Values.version.api.tag }}
