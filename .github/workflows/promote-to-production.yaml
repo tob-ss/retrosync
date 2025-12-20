@@ -1,5 +1,5 @@
 # .github/workflows/promote-to-preprod.yaml
-name: Promote to preprod
+name: Promote to production
 
 on:
   pull_request:
