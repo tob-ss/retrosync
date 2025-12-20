@@ -26,9 +26,9 @@ jobs:
           git config --global user.name "<name>"
 
           # create a new branch
+          git remote prune origin
           git switch -c preprod/${{ github.sha }}
-          git fetch --prune origin
-          git pull
+          git remote prune origin
 
           # promote the change
           cp infrastructure/environments/dev/api/version.yaml infrastructure/environments/preprod/api/version.yaml
