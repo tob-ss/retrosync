@@ -27,7 +27,7 @@ jobs:
 
           # create a new branch
         
-          git switch -c preprod/${{ github.sha }}
+          git switch -c pre-prod/${{ github.sha }}
         
 
           # promote the change
@@ -38,11 +38,11 @@ jobs:
           # push the change to the new branch
           git add infrastructure/environments/preprod/.
           git commit -m "Promote development to preprod"
-          git push -u origin preprod/${{ github.sha }}
+          git push -u origin pre-prod/${{ github.sha }}
       - run: |
           gh pr create \
             -B main \
-            -H preprod/${{ github.sha }} \
+            -H pre-prod/${{ github.sha }} \
             --title "Promote development to preprod" \
             --body "Automatically created by GitHub Actions"
         env:
