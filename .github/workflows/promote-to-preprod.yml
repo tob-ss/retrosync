@@ -27,6 +27,8 @@ jobs:
 
           # create a new branch
           git switch -c preprod/${{ github.sha }}
+          git fetch --prune origin
+          git pull
 
           # promote the change
           cp infrastructure/environments/dev/api/version.yaml infrastructure/environments/preprod/api/version.yaml
