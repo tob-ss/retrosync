@@ -32,12 +32,12 @@ spec:
               topologyKey: "kubernetes.io/hostname"
         nodeAffinity: 
           requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-              - {{ .Values.node.selector }}
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - {{ .Values.node.selector }}
       containers:
       - name: fastapi-container
         image: {{ .Values.version.api.name }}:{{ .Values.version.api.tag }}
