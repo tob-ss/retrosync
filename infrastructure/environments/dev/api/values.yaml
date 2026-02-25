@@ -9,3 +9,5 @@ deployment:
 api:
   nodePort: 30020
   replicas: 1
+node: 
+  selector: "retrosync-preprod-worker"
