@@ -9,3 +9,5 @@ deployment:
 api:       
   nodePort: 30021
   replicas: 1
+node: 
+  selector: "ubuntu-8gb-hel1-1"
