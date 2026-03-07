@@ -1,4 +1,4 @@
-# RetroSync
+# RetroSync Instructure Repo
 
 RetroSync is a cloud saving software for retro games! Backup your retro game saves into the cloud and sync them across multiple devices.
 
