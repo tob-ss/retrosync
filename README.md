@@ -22,8 +22,9 @@ The Kubernetes cluster comprises of 5 nodes: a control plane node and four worke
 
 More information about the environments and cluster can be found in the code.
 
-Please note that the application folder is no longer in use and will be removed in a later pull request. 
-For the RetroSync API please see the API repository, and for the RetroSync Application and Dashboard please see the APP repository.
+> Please note that the application folder is no longer in use and will be removed in a later pull request. 
+
+> For the RetroSync API please see the API repository, and for the RetroSync Application and Dashboard please see the APP repository.
 
 
 ## Contributing
