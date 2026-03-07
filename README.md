@@ -24,7 +24,7 @@ More information about the environments and cluster can be found in the code.
 
 > Please note that the application folder is no longer in use and will be removed in a later pull request. 
 
-> For the RetroSync API please see the API repository, and for the RetroSync Application and Dashboard please see the APP repository.
+> For the RetroSync API please see the api repository, and for the RetroSync Application and Dashboard please see the app repository.
 
 
 ## Contributing
